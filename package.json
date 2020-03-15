@@ -1,8 +1,8 @@
 {
   "name": "@foamfactory/taphandle",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "Client-side scripts necessary for the FoamFactory web application",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "mocha",
     "build": "babel src -d lib"
