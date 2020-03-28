@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Username Field Examples</title>
+  <script src="../lib/index-web.js"></script>
+
+  <!-- The following are Bulma CSS files. You do not need to include them in your HTML files. -->
+  <link rel="stylesheet" href="../node_modules/bulma/css/bulma.min.css">
+  <link rel="stylesheet" href="../node_modules/bulmaswatch/materia/bulmaswatch.min.css">
+
+  <style>
+    body {
+      margin: 1em;
+    }
+
+    body > * {
+      margin-bottom: 1em;
+    }
+
+    .field {
+      width: 40%;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="title is-1">Username Field Examples</h1>
+  <article class="message">
+    <div class="message-header">
+      <p>Note</p>
+    </div>
+    <div class="message-body">
+      For all examples, the prefix used is <code>ninkasi</code>.
+    </div>
+  </article>
+
+  <p>The following is an example of how to use Taphandle with a username field for validation. A username field is defined as an <code>&lt;input&gt;</code> tag with <code>type="username"</code>.</p>
+
+  <div class="field">
+    <label class="label">Username</label>
+    <input type="username" id="test-username" value="" placeholder="Please enter your username" class="ninkasi_usernameField input" required>
+    <p class="ninkasi_formFieldMessage help is-danger">Username not valid</p>
+  </div>
+
+  <script>
+    taphandle.ComponentBehaviors.init('ninkasi', {
+      'fieldMessageErrorClass': 'is-danger'
+    });
+  </script>
+</body>
+</html>

@@ -1,11 +1,13 @@
 {
   "name": "@foamfactory/taphandle",
-  "version": "1.3.6",
+  "version": "1.4.0",
   "description": "Client-side scripts necessary for the FoamFactory web application",
   "main": "lib/index.js",
   "scripts": {
-    "test": "mocha",
-    "build": "babel src -d lib"
+    "build": "babel src -d lib",
+    "build:web": "yarn build && browserify --s taphandle lib/index.js > lib/index-web.js",
+    "clean": "rimraf lib",
+    "test": "mocha"
   },
   "keywords": [],
   "author": "",
@@ -15,11 +17,14 @@
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
+    "bulma": "^0.8.1",
+    "bulmaswatch": "^0.8.0",
     "chai": "^4.2.0",
     "jsdom": "^15.2.0",
     "jsdom-global": "^3.0.2",
     "lodash": "^4.17.15",
-    "mocha": "^6.2.2"
+    "mocha": "^6.2.2",
+    "rimraf": "^3.0.2"
   },
   "dependencies": {
     "@foamfactory/paulrevere": "1.0.1",
