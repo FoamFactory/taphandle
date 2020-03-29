@@ -17,6 +17,7 @@
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
+    "browserify": "^16.5.0",
     "bulma": "^0.8.1",
     "bulmaswatch": "^0.8.0",
     "chai": "^4.2.0",
