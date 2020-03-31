@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { Password } from '../src/behavior/components/password';
 import { ComponentBehaviors } from '../src';
 import _ from 'lodash';
@@ -9,12 +8,12 @@ const PREFIX = 'ninkasi';
 
 describe ('ComponentBehavior', () => {
   it ('should load the module', () => {
-    expect(ComponentBehaviors).to.not.be.undefined;
+    expect(ComponentBehaviors).toBeDefined();
   });
 
   describe ('basic behavior class', () => {
     beforeEach(() => {
-      expect(document).to.not.be.null;
+      expect(document).not.toBeNull();
 
       document.body.innerHTML =
         '<div>' +
@@ -23,7 +22,7 @@ describe ('ComponentBehavior', () => {
     });
 
     it ('should be able to instantiate an instance of Behavior and use it to trigger specific things', () => {
-      expect(Behavior).to.not.be.null;
+      expect(Behavior).not.toBeNull();
       let didClick = false;
 
       let toggle = (event) => {
@@ -36,24 +35,24 @@ describe ('ComponentBehavior', () => {
         }
       });
 
-      expect(didClick).to.be.false;
+      expect(didClick).toBe(false);
 
-      expect(testBed).to.not.be.null;
+      expect(testBed).not.toBeNull();
 
       let element = document.getElementById('passwordPrompt');
-      expect(element).to.not.be.null;
+      expect(element).not.toBeNull();
 
       testBed.on(document.body);
 
       element.click();
 
-      expect(didClick).to.be.true;
+      expect(didClick).toBe(true);
     });
   });
 
   describe ('password behavior class', () => {
     beforeEach(() => {
-      expect(document).to.not.be.null;
+      expect(document).not.toBeNull();
 
       document.body.innerHTML =
       '<div>' +
@@ -67,19 +66,19 @@ describe ('ComponentBehavior', () => {
       password.on(document.body);
 
       let eyeIcon = document.getElementById('eye-icon');
-      expect(eyeIcon).to.not.be.null;
+      expect(eyeIcon).not.toBeNull();
 
       eyeIcon.click();
 
       eyeIcon = document.getElementById('eye-icon');
-      expect(eyeIcon).to.not.be.null;
-      expect(_.values(eyeIcon.classList)).to.contain('fa-eye-slash');
+      expect(eyeIcon).not.toBeNull();
+      expect(_.values(eyeIcon.classList)).toEqual(expect.arrayContaining(['fa-eye-slash']));
     });
   });
 
   describe ('ComponentBehaviors', () => {
     beforeEach(() => {
-      expect(document).to.not.be.null;
+      expect(document).not.toBeNull();
 
       document.body.innerHTML =
       '<div>' +
@@ -92,13 +91,13 @@ describe ('ComponentBehavior', () => {
       // Check password component behavior
       let componentBehaviors = new ComponentBehaviors(PREFIX);
       let eyeIcon = document.getElementById('eye-icon');
-      expect(eyeIcon).to.not.be.null;
+      expect(eyeIcon).not.toBeNull();
 
       eyeIcon.click();
 
       eyeIcon = document.getElementById('eye-icon');
-      expect(eyeIcon).to.not.be.null;
-      expect(_.values(eyeIcon.classList)).to.contain('fa-eye-slash');
+      expect(eyeIcon).not.toBeNull();
+      expect(_.values(eyeIcon.classList)).toEqual(expect.arrayContaining(['fa-eye-slash']));
     });
   });
 });
