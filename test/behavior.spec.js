@@ -1,7 +1,6 @@
-import { expect } from 'chai';
-import { Password } from '../src/behavior/components/password';
 import { ComponentBehaviors } from '../src';
 import _ from 'lodash';
+import $ from 'jquery';
 
 import { Behavior } from '../src/behavior/behavior';
 
@@ -9,21 +8,21 @@ const PREFIX = 'ninkasi';
 
 describe ('ComponentBehavior', () => {
   it ('should load the module', () => {
-    expect(ComponentBehaviors).to.not.be.undefined;
+    expect(ComponentBehaviors).toBeDefined();
   });
 
   describe ('basic behavior class', () => {
     beforeEach(() => {
-      expect(document).to.not.be.null;
+      expect(document).not.toBeNull();
 
       document.body.innerHTML =
         '<div>' +
-        '  <input id="passwordPrompt" type="password" class="ninkasi-show_password" />' +
+        '  <input id="passwordPrompt" type="password" class="ninkasi_show-password" />' +
         '</div>';
     });
 
     it ('should be able to instantiate an instance of Behavior and use it to trigger specific things', () => {
-      expect(Behavior).to.not.be.null;
+      expect(Behavior).not.toBeNull();
       let didClick = false;
 
       let toggle = (event) => {
@@ -32,73 +31,71 @@ describe ('ComponentBehavior', () => {
 
       let testBed = new Behavior({
         ['click']: {
-          [`.${PREFIX}-show_password, .${PREFIX}-show_multipassword`]: toggle
+          [`.${PREFIX}_show-password, .${PREFIX}-show-multipassword`]: toggle
         }
       });
 
-      expect(didClick).to.be.false;
+      expect(didClick).toBe(false);
 
-      expect(testBed).to.not.be.null;
+      expect(testBed).not.toBeNull();
 
       let element = document.getElementById('passwordPrompt');
-      expect(element).to.not.be.null;
+      expect(element).not.toBeNull();
 
       testBed.on(document.body);
 
       element.click();
 
-      expect(didClick).to.be.true;
-    });
-  });
-
-  describe ('password behavior class', () => {
-    beforeEach(() => {
-      expect(document).to.not.be.null;
-
-      document.body.innerHTML =
-      '<div>' +
-      '  <input type="password" id="text-field-password" value="password" placeholder="" class="">' +
-      '  <i id="eye-icon" class="fa fa-fw fa-eye field-icon ninkasi-show_password" aria-label="password-visibility-control" aria-hidden="true" aria-controls="text-field-password"></i>' +
-      '</div>';
-    });
-
-    it ('should switch the icon when the show password icon is clicked', () => {
-      let password = new Password(PREFIX);
-      password.on(document.body);
-
-      let eyeIcon = document.getElementById('eye-icon');
-      expect(eyeIcon).to.not.be.null;
-
-      eyeIcon.click();
-
-      eyeIcon = document.getElementById('eye-icon');
-      expect(eyeIcon).to.not.be.null;
-      expect(_.values(eyeIcon.classList)).to.contain('fa-eye-slash');
+      expect(didClick).toBe(true);
     });
   });
 
   describe ('ComponentBehaviors', () => {
     beforeEach(() => {
-      expect(document).to.not.be.null;
+      expect(document).not.toBeNull();
 
       document.body.innerHTML =
       '<div>' +
       '  <input type="password" id="text-field-password" value="password" placeholder="" class="">' +
-      '  <i id="eye-icon" class="fa fa-fw fa-eye field-icon ninkasi-show_password" aria-label="password-visibility-control" aria-hidden="true" aria-controls="text-field-password"></i>' +
+      '  <i id="eye-icon" class="fa fa-fw fa-eye field-icon ninkasi_show-password" aria-label="password-visibility-control" aria-hidden="true" aria-controls="text-field-password"></i>' +
       '</div>';
     });
 
-    it ('should set up all component behaviors', () => {
-      // Check password component behavior
-      let componentBehaviors = new ComponentBehaviors(PREFIX);
-      let eyeIcon = document.getElementById('eye-icon');
-      expect(eyeIcon).to.not.be.null;
+    describe('with no options specified', () => {
+      it ('should set up all component behaviors with default options', () => {
+        let componentBehaviors = ComponentBehaviors.getInstance(PREFIX);
+        let opts = ComponentBehaviors.getOptions();
 
-      eyeIcon.click();
+        let eyeIcon = document.getElementById('eye-icon');
+        expect(eyeIcon).not.toBeNull();
 
-      eyeIcon = document.getElementById('eye-icon');
-      expect(eyeIcon).to.not.be.null;
-      expect(_.values(eyeIcon.classList)).to.contain('fa-eye-slash');
+        eyeIcon.click();
+
+        eyeIcon = document.getElementById('eye-icon');
+        expect(eyeIcon).not.toBeNull();
+        expect(_.values(eyeIcon.classList)).toEqual(expect.arrayContaining(['fa-eye-slash']));
+
+        expect(opts.fieldMessageClass).toEqual("ninkasi_formFieldMessage");
+        expect(opts.fieldMessageErrorClass).toEqual("ninkasi_formFieldErrorMessage");
+        expect(opts.defaultValueMissingMessage).toEqual("Please fill in this field");
+      });
+    });
+
+
+    describe('with specific options set', () => {
+      it ('should set up the appropriate options in ComponentBehaviors', () => {
+        let componentBehaviors = ComponentBehaviors.getInstance(PREFIX, {
+          "fieldMessageClass": "someFieldMessage",
+          "fieldMessageErrorClass": "anError",
+          "defaultValueMissingMessage": "Invalid input"
+        });
+
+        let opts = ComponentBehaviors.getOptions();
+
+        expect(opts.fieldMessageClass).toEqual("someFieldMessage");
+        expect(opts.fieldMessageErrorClass).toEqual("anError");
+        expect(opts.defaultValueMissingMessage).toEqual("Invalid input");
+      });
     });
   });
 });
