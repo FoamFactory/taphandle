@@ -1,13 +1,11 @@
 import { FieldValidator } from './field-validator';
 import { Behavior } from '../behavior';
+import { Password } from './password';
 import $ from 'jquery';
 
-export class Password extends FieldValidator {
+export class PasswordConfirmation extends FieldValidator {
   constructor(prefix, options) {
-    Password._defaultValueMissingMessage = 'Password missing';
-    Password._defaultMatchFailedMessage = options['defaultMatchFailedMessage'];
-
-    super(prefix, `${prefix}_passwordField`, options);
+    super(prefix, `${prefix}_passwordConfirmationField`, options);
   }
 
   static validate(element, messageElement) {
@@ -28,20 +26,5 @@ export class Password extends FieldValidator {
       $(element).removeClass(Password._fieldMessageErrorClass);
       $(messageElement).css('visibility', 'hidden');
     }
-  }
-
-  static checkRequiredMatchValid(element) {
-    let elementToMatch = $(element).data('shouldmatch');
-    if (elementToMatch) {
-      let matchingElement = $('#' + elementToMatch);
-      if (!matchingElement.val()) {
-        // Element isn't input yet, so just report true for validity.
-        return true;
-      } else {
-        return matchingElement.val() === $(element).val();
-      }
-    }
-
-    return true;
   }
 }

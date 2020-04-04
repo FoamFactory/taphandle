@@ -76,7 +76,7 @@ export class FieldValidator {
     if (this.messageShown) {
       this.restoreDefaultMessage();
     }
-    
+
     if (validity) {
       this.hideMessage();
       this.element.setCustomValidity('');
