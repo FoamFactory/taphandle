@@ -4,7 +4,6 @@ import $ from 'jquery';
 
 export class Username extends FieldValidator {
   constructor(prefix, options) {
-    Username._fieldMessageClass = options['fieldMessageClass'];
     Username._defaultValueMissingMessage = 'Please enter a username';
     Username._defaultMatchFailedMessage = options['defaultMatchFailedMessage'];
 
@@ -12,16 +11,16 @@ export class Username extends FieldValidator {
   }
 
   static validate(element, messageElement) {
+    let message = messageElement.text();
     if (element.validity.valueMissing) {
       if (messageElement.text().length === 0) {
-        messageElement.text(Username._defaultValueMissingMessage);
+        message = Username._defaultValueMissingMessage;
       }
 
-      $(element).addClass(Username._fieldMessageErrorClass);
-      $(messageElement).css('visibility', 'visible');
+      FieldValidator.enableErrorMessage(element, messageElement, Username,
+                                        message);
     } else {
-      $(element).removeClass(Username._fieldMessageErrorClass);
-      $(messageElement).css('visibility', 'hidden');
+      FieldValidator.disableErrorMessage(element, messageElement, Username);
     }
   }
 }

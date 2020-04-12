@@ -1,5 +1,5 @@
 import { FieldValidator } from './field-validator';
-import { Behavior } from '../behavior';
+import { PasswordConfirmation } from './password-confirmation';
 import $ from 'jquery';
 
 export class Password extends FieldValidator {
@@ -14,34 +14,54 @@ export class Password extends FieldValidator {
     let requiredMatchValid = Password.checkRequiredMatchValid(element);
 
     if (element.validity.valueMissing) {
-      if (messageElement.text().length === 0) {
-        messageElement.text(Password._defaultValueMissingMessage);
+      let message = messageElement.text();
+      if (message.length === 0) {
+        message = Password._defaultValueMissingMessage;
       }
 
-      $(element).addClass(Password._fieldMessageErrorClass);
-      $(messageElement).css('visibility', 'visible');
+      FieldValidator.enableErrorMessage(element, messageElement, Password,
+                                        message);
     } else if (!requiredMatchValid) {
-      $(element).addClass(Password._fieldMessageErrorClass);
-      $(messageElement).text(Password._defaultMatchFailedMessage);
-      $(messageElement).css('visibility', 'visible');
+      FieldValidator.enableErrorMessage(element, messageElement, Password,
+                                        Password._defaultMatchFailedMessage);
     } else {
-      $(element).removeClass(Password._fieldMessageErrorClass);
-      $(messageElement).css('visibility', 'hidden');
+      FieldValidator.disableErrorMessage(element, messageElement, Password);
+
+      // Make sure the matching element's validity message is cleared.
+      let ffSelector = `.${FieldValidator._prefix}_formFieldMessage`
+      let elementToMatch = Password._getElementToMatch(element);
+      if (elementToMatch) {
+        let pwMessageElement = $(elementToMatch).siblings(ffSelector);
+        FieldValidator.disableErrorMessage(elementToMatch, pwMessageElement,
+                                           PasswordConfirmation);
+      }
     }
   }
 
   static checkRequiredMatchValid(element) {
-    let elementToMatch = $(element).data('shouldmatch');
+    let elementToMatch = Password._getElementToMatch(element);
     if (elementToMatch) {
-      let matchingElement = $('#' + elementToMatch);
-      if (!matchingElement.val()) {
+      if (!elementToMatch.val()) {
         // Element isn't input yet, so just report true for validity.
         return true;
       } else {
-        return matchingElement.val() === $(element).val();
+        return elementToMatch.val() === $(element).val();
       }
     }
 
+    // This can only happen if the matching element was not found, so let's
+    // output a warning.
+    let matchId = $(element).data('shouldmatch');
+    console.warn(`Unable to find element with id: ${matchId} to match to password`);
     return true;
+  }
+
+  static _getElementToMatch(element) {
+    let elementToMatch = $(element).data('shouldmatch');
+    if (elementToMatch && $('#' + elementToMatch).get(0)) {
+      return $('#' + elementToMatch);
+    }
+
+    return null;
   }
 }
