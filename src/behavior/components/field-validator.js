@@ -14,16 +14,20 @@ export class FieldValidator extends Behavior {
       FieldValidator.changed(event, delegateClass);
     };
 
-    // Remove any field error messages by setting them to display: none and
-    // also remove any styling on the form field itself.
-    $(`.${FieldValidator._fieldMessageClass}`).css('visibility', 'hidden');
-    $(`.${className}`).removeClass(FieldValidator._fieldMessageErrorClass);
+    FieldValidator.removeAllErrors(className);
 
     super({
       ['change']: {
         [`.${className}`]: changedMethod
       },
     });
+  }
+
+  static removeAllErrors(className) {
+    // Remove any field error messages by setting them to display: none and
+    // also remove any styling on the form field itself.
+    $(`.${FieldValidator._fieldMessageClass}`).css('visibility', 'hidden');
+    $(`.${className}`).removeClass(FieldValidator._fieldMessageErrorClass);
   }
 
   static changed(event, delegateClass) {
@@ -36,5 +40,16 @@ export class FieldValidator extends Behavior {
 
   static validate(element, messageElement) {
     throw 'Unimplemented. You want to implement this in your subclass of FieldValidator';
+  }
+
+  static enableErrorMessage(element, messageElement, delegateClass, message) {
+    $(element).addClass(delegateClass._fieldMessageErrorClass);
+    $(messageElement).text(message);
+    $(messageElement).css('visibility', 'visible');
+  }
+
+  static disableErrorMessage(element, messageElement, delegateClass) {
+    $(element).removeClass(delegateClass._fieldMessageErrorClass);
+    $(messageElement).css('visibility', 'hidden');
   }
 }

@@ -5,6 +5,8 @@ import $ from 'jquery';
 
 export class PasswordConfirmation extends FieldValidator {
   constructor(prefix, options) {
+    PasswordConfirmation._defaultValueMissingMessage = 'Password confirmation missing';
+
     super(prefix, `${prefix}_passwordConfirmationField`, options);
   }
 
@@ -12,19 +14,29 @@ export class PasswordConfirmation extends FieldValidator {
     let requiredMatchValid = Password.checkRequiredMatchValid(element);
 
     if (element.validity.valueMissing) {
-      if (messageElement.text().length === 0) {
-        messageElement.text(Password._defaultValueMissingMessage);
+      let message = messageElement.text();
+      if (message.length === 0) {
+        message = PasswordConfirmation._defaultValueMissingMessage;
       }
 
-      $(element).addClass(Password._fieldMessageErrorClass);
-      $(messageElement).css('visibility', 'visible');
+      FieldValidator.enableErrorMessage(element, messageElement,
+                                        PasswordConfirmation, message);
     } else if (!requiredMatchValid) {
-      $(element).addClass(Password._fieldMessageErrorClass);
-      $(messageElement).text(Password._defaultMatchFailedMessage);
-      $(messageElement).css('visibility', 'visible');
+      FieldValidator.enableErrorMessage(element, messageElement,
+                                        PasswordConfirmation,
+                                        Password._defaultMatchFailedMessage);
     } else {
-      $(element).removeClass(Password._fieldMessageErrorClass);
-      $(messageElement).css('visibility', 'hidden');
+      FieldValidator.disableErrorMessage(element, messageElement,
+                                         PasswordConfirmation);
+      // Make sure the matching element's validity message is cleared.
+      let ffSelector = `.${FieldValidator._prefix}_formFieldMessage`
+      let elementToMatch = Password._getElementToMatch(element);
+      if (elementToMatch) {
+        let pwMessageElement = $(elementToMatch).siblings(ffSelector);
+        FieldValidator.disableErrorMessage(elementToMatch, pwMessageElement,
+                                           Password);
+
+      }
     }
   }
 }
