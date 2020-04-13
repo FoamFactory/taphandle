@@ -1,7 +1,7 @@
 {
   "name": "@foamfactory/taphandle",
   "version": "1.5.0",
-  "description": "Client-side scripts necessary for the FoamFactory web application",
+  "description": "A behavior-based event delegation library designed for FoamFactory",
   "main": "lib/index.js",
   "scripts": {
     "build": "babel src -d lib",
