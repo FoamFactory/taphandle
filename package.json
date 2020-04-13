@@ -1,6 +1,6 @@
 {
   "name": "@foamfactory/taphandle",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Client-side scripts necessary for the FoamFactory web application",
   "main": "lib/index.js",
   "scripts": {
