@@ -5,7 +5,7 @@ export class FieldValidator extends Behavior {
   constructor(prefix, className, options) {
     FieldValidator._prefix = prefix;
     FieldValidator._fieldMessageClass = options['fieldMessageClass'];
-    FieldValidator._fieldMessageErrorClass = options['fieldMessageErrorClass'];
+    FieldValidator._fieldMessageErrorClass = options['fieldErrorClass'];
 
     // We delegate some methods to the actual child class. This is kind of like
     // making an abstract method in Java.

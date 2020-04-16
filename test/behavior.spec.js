@@ -76,7 +76,7 @@ describe ('ComponentBehavior', () => {
         expect(_.values(eyeIcon.classList)).toEqual(expect.arrayContaining(['fa-eye-slash']));
 
         expect(opts.fieldMessageClass).toEqual("ninkasi_formFieldMessage");
-        expect(opts.fieldMessageErrorClass).toEqual("ninkasi_formFieldErrorMessage");
+        expect(opts.fieldErrorClass).toEqual("ninkasi_formFieldError");
         expect(opts.defaultValueMissingMessage).toEqual("Please fill in this field");
       });
     });
@@ -86,14 +86,14 @@ describe ('ComponentBehavior', () => {
       it ('should set up the appropriate options in ComponentBehaviors', () => {
         let componentBehaviors = ComponentBehaviors.getInstance(PREFIX, {
           "fieldMessageClass": "someFieldMessage",
-          "fieldMessageErrorClass": "anError",
+          "fieldErrorClass": "anError",
           "defaultValueMissingMessage": "Invalid input"
         });
 
         let opts = ComponentBehaviors.getOptions();
 
         expect(opts.fieldMessageClass).toEqual("someFieldMessage");
-        expect(opts.fieldMessageErrorClass).toEqual("anError");
+        expect(opts.fieldErrorClass).toEqual("anError");
         expect(opts.defaultValueMissingMessage).toEqual("Invalid input");
       });
     });

@@ -22,7 +22,7 @@ export class ComponentBehaviors {
     ComponentBehaviors._prefix = prefix;
     ComponentBehaviors._options = {
       "fieldMessageClass": `${prefix}_formFieldMessage`,
-      "fieldMessageErrorClass": `${prefix}_formFieldErrorMessage`,
+      "fieldErrorClass": `${prefix}_formFieldError`,
       "defaultValueMissingMessage": "Please fill in this field",
       "defaultMatchFailedMessage": "The field and its confirmation do not match"
     };

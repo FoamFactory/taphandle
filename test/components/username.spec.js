@@ -73,7 +73,7 @@ describe ('Username', () => {
         expect($(usernameField).val()).toEqual('zim');
         expect($(messageElement).text()).toBe('Username not valid');
         expect($(messageElement).css('visibility')).toEqual('hidden');
-        expect(_.values(usernameField.classList)).not.toEqual(expect.arrayContaining(['ninkasi_formFieldErrorMessage']));
+        expect(_.values(usernameField.classList)).not.toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
       });
     });
 
@@ -84,7 +84,7 @@ describe ('Username', () => {
 
           let usernameField = document.getElementById('test-username');
           expect(usernameField).not.toBeNull();
-          expect(_.values(usernameField.classList)).not.toEqual(expect.arrayContaining(['ninkasi_formFieldErrorMessage']));
+          expect(_.values(usernameField.classList)).not.toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
 
           let messageElement = document.getElementById('usernameErrorMessage');
 
@@ -93,7 +93,7 @@ describe ('Username', () => {
           usernameField.dispatchEvent(changeEvent);
 
           expect($(messageElement).text()).toBe('Username not valid');
-          expect(_.values(usernameField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldErrorMessage']));
+          expect(_.values(usernameField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
         });
       });
 
@@ -112,7 +112,7 @@ describe ('Username', () => {
 
           let usernameField = document.getElementById('test-username');
           expect(usernameField).not.toBeNull();
-          expect(_.values(usernameField.classList)).not.toEqual(expect.arrayContaining(['ninkasi_formFieldErrorMessage']));
+          expect(_.values(usernameField.classList)).not.toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
 
           let messageElement = document.getElementById('usernameErrorMessage');
           expect($(messageElement).text()).toBe('');
@@ -122,7 +122,7 @@ describe ('Username', () => {
           usernameField.dispatchEvent(changeEvent);
 
           expect($(messageElement).text()).toBe('Please enter a username');
-          expect(_.values(usernameField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldErrorMessage']));
+          expect(_.values(usernameField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
         });
       });
     });
