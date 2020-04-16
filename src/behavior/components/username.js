@@ -7,7 +7,7 @@ export class Username extends FieldValidator {
     Username._defaultValueMissingMessage = 'Please enter a username';
     Username._defaultMatchFailedMessage = options['defaultMatchFailedMessage'];
 
-    super(prefix, `${prefix}_usernameField`, options);
+    super(prefix, 'text', `${prefix}_usernameField`, options);
   }
 
   static validate(element, messageElement) {
