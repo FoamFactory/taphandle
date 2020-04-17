@@ -24,9 +24,16 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: yarn ci
-    - run: yarn build --if-present
-    - run: yarn test
-      
+    - name: Authenticate npm with the GPR
+      uses: jgierer12/npm-auth-gpr@v1.0.1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Install Dependencies
+      run: yarn install --frozen-lockfile
+    - name: Build
+      run: yarn build
+    - name: Run Tests
+      run: yarn test
+
       env:
         CI: true
