@@ -1,6 +1,8 @@
 # taphandle
 A behavior-based event delegation library designed for [FoamFactory](foamfactory.io).
 
+[![Coverage Status](https://coveralls.io/repos/github/FoamFactory/taphandle/badge.svg)](https://coveralls.io/github/FoamFactory/taphandle)
+
 ## Introduction
 ### Basis
 This library is based off of scripts included with the
