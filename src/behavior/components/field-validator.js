@@ -2,10 +2,11 @@ import { Behavior } from '../behavior';
 import $ from 'jquery';
 
 export class FieldValidator extends Behavior {
-  constructor(prefix, className, options) {
+  constructor(prefix, type, className, options) {
     FieldValidator._prefix = prefix;
+    FieldValidator._expectedInputType = type;
     FieldValidator._fieldMessageClass = options['fieldMessageClass'];
-    FieldValidator._fieldMessageErrorClass = options['fieldMessageErrorClass'];
+    FieldValidator._fieldMessageErrorClass = options['fieldErrorClass'];
 
     // We delegate some methods to the actual child class. This is kind of like
     // making an abstract method in Java.
@@ -14,7 +15,7 @@ export class FieldValidator extends Behavior {
       FieldValidator.changed(event, delegateClass);
     };
 
-    FieldValidator.removeAllErrors(className);
+    FieldValidator.removeAllErrors(type, className);
 
     super({
       ['change']: {
@@ -23,15 +24,28 @@ export class FieldValidator extends Behavior {
     });
   }
 
-  static removeAllErrors(className) {
-    $(`.${className}`).each((index, element) => {
-      let skipAVFlag = $(element).data('skipautovalidation');
-      if (!skipAVFlag) {
-        let ffSelector = `.${FieldValidator._fieldMessageClass}`;
-        $(element).siblings(ffSelector).css('visibility', 'hidden');
-        $(element).removeClass(FieldValidator._fieldMessageErrorClass);
-      }
-    });
+  static removeAllErrors(expectedInputType, className) {
+    if (!className) {
+      $(`input[type=${expectedInputType}]`).each((index, element) => {
+        FieldValidator.removeAllErrorsOnElement($(element));
+      });
+    } else {
+      $(`input[type=${expectedInputType}].${className}`).each((index, element) => {
+        FieldValidator.removeAllErrorsOnElement($(element));
+      });
+    }
+  }
+
+  static removeAllErrorsOnElement(element) {
+    let skipAVFlag = element.data('skipautovalidation');
+    if (!skipAVFlag) {
+      // Remove any field error messages by setting them to display: none and
+      // also remove any styling on the form field itself.
+      let ffSelector = `.${FieldValidator._prefix}_formFieldMessage`;
+      let messageElement = element.siblings(ffSelector);
+      $(messageElement).css('visibility', 'hidden');
+      element.removeClass(FieldValidator._fieldMessageErrorClass);
+    }
   }
 
   static changed(event, delegateClass) {

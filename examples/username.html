@@ -46,10 +46,10 @@
 
 
   <div class="field-and-explanation">
-    <p class="explanation">The following is an example of how to use Taphandle with a username field for validation. A username field is defined as an <code>&lt;input&gt;</code> tag with <code>type="username"</code>.</p>
+    <p class="explanation">The following is an example of how to use Taphandle with a username field for validation. A username field is defined as an <code>&lt;input&gt;</code> tag with <code>type="text"</code> and a class of <code>PREFIX_usernameField</code>.</p>
     <div class="field">
       <label class="label">Username</label>
-      <input type="username" id="test-username" value="" placeholder="Please enter your username" class="ninkasi_usernameField input" required>
+      <input type="text" id="test-username" value="" placeholder="Please enter your username" class="ninkasi_usernameField input" required>
       <p class="ninkasi_formFieldMessage help is-danger"></p>
     </div>
   </div>
@@ -58,14 +58,14 @@
     <p class="explanation">The following is an example of how to skip auto-validation of the entries, if, for example, you want to always show an error message, want your own validation code to run on a specific element, or simply don't want the validation to happen. You can achieve this through the <code>data-skipautovalidation</code> attribute on the form field.</p>
     <div class="field">
       <label class="label">Username</label>
-      <input type="username" id="test-username" value="" placeholder="Please enter your username" class="ninkasi_usernameField is-danger input" data-skipautovalidation="true" required>
+      <input type="text" id="test-username" value="" placeholder="Please enter your username" class="ninkasi_usernameField is-danger input" data-skipautovalidation="true" required>
       <p class="ninkasi_formFieldMessage help is-danger">Hello world!</p>
     </div>
   </div>
 
   <script>
     taphandle.ComponentBehaviors.getInstance('ninkasi', {
-      'fieldMessageErrorClass': 'is-danger'
+      'fieldErrorClass': 'is-danger'
     });
   </script>
 </body>

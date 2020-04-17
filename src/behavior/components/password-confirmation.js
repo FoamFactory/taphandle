@@ -7,7 +7,7 @@ export class PasswordConfirmation extends FieldValidator {
   constructor(prefix, options) {
     PasswordConfirmation._defaultValueMissingMessage = 'Password confirmation missing';
 
-    super(prefix, `${prefix}_passwordConfirmationField`, options);
+    super(prefix, 'password', `${prefix}_passwordConfirmationField`, options);
   }
 
   static validate(element, messageElement) {

@@ -55,7 +55,7 @@ describe ('Password', () => {
 
           expect($(confField).val()).toEqual('password');
           expect($(messageElement).css('visibility')).toEqual('hidden');
-          expect(_.values(confField.classList)).not.toEqual(expect.arrayContaining(['ninkasi_formFieldErrorMessage']));
+          expect(_.values(confField.classList)).not.toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
         });
 
         describe ('after clearing the password confirmation input', () => {
@@ -79,7 +79,7 @@ describe ('Password', () => {
             expect($(confField).val()).toEqual('');
             expect($(messageElement).css('visibility')).toEqual('visible');
             expect($(messageElement).text()).toEqual('Please enter a password confirmation');
-            expect(_.values(confField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldErrorMessage']));
+            expect(_.values(confField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
           });
 
           describe ('when an error message isn\'t provided for the confirmation field', () => {
@@ -99,7 +99,7 @@ describe ('Password', () => {
               expect($(confField).val()).toEqual('');
               expect($(messageElement).css('visibility')).toEqual('visible');
               expect($(messageElement).text()).toEqual('Password confirmation missing');
-              expect(_.values(confField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldErrorMessage']));
+              expect(_.values(confField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
             });
           });
         });
@@ -126,7 +126,7 @@ describe ('Password', () => {
 
             expect($(passwordField).val()).toEqual('password');
             expect($(messageElement).css('visibility')).toEqual('hidden');
-            expect(_.values(passwordField.classList)).not.toEqual(expect.arrayContaining(['ninkasi_formFieldErrorMessage']));
+            expect(_.values(passwordField.classList)).not.toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
           });
         });
 
@@ -151,7 +151,7 @@ describe ('Password', () => {
             expect($(passwordField).val()).toEqual('passw0rd');
             expect($(messageElement).css('visibility')).toEqual('visible');
             expect($(messageElement).text()).toEqual('The field and its confirmation do not match');
-            expect(_.values(passwordField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldErrorMessage']));
+            expect(_.values(passwordField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
           });
         });
       });
@@ -177,7 +177,7 @@ describe ('Password', () => {
 
         expect($(passwordField).val()).toEqual('zim');
         expect($(messageElement).css('visibility')).toEqual('hidden');
-        expect(_.values(passwordField.classList)).not.toEqual(expect.arrayContaining(['ninkasi_formFieldErrorMessage']));
+        expect(_.values(passwordField.classList)).not.toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
       });
 
       describe ('when the matching element cannot be found', () => {
@@ -195,7 +195,7 @@ describe ('Password', () => {
 
           expect($(passwordField).val()).toEqual('zim');
           expect($(messageElement).css('visibility')).toEqual('hidden');
-          expect(_.values(passwordField.classList)).not.toEqual(expect.arrayContaining(['ninkasi_formFieldErrorMessage']));
+          expect(_.values(passwordField.classList)).not.toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
         });
       });
 
@@ -219,7 +219,7 @@ describe ('Password', () => {
             expect($(passwordField).val()).toEqual('');
             expect($(messageElement).css('visibility')).toEqual('visible');
             expect($(messageElement).text()).toEqual('Please enter a password');
-            expect(_.values(passwordField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldErrorMessage']));
+            expect(_.values(passwordField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
           });
         });
 
@@ -239,7 +239,7 @@ describe ('Password', () => {
             expect($(passwordField).val()).toEqual('');
             expect($(messageElement).css('visibility')).toEqual('visible');
             expect($(messageElement).text()).toEqual('Password missing');
-            expect(_.values(passwordField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldErrorMessage']));
+            expect(_.values(passwordField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
           });
         });
 
@@ -261,7 +261,7 @@ describe ('Password', () => {
           expect($(confField).val()).toEqual('zoop');
           expect($(messageElement).css('visibility')).toEqual('visible');
           expect($(messageElement).text()).toEqual('The field and its confirmation do not match');
-          expect(_.values(confField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldErrorMessage']));
+          expect(_.values(confField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
         });
       });
     });
