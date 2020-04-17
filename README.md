@@ -109,3 +109,14 @@ your web application:
   taphandle.ComponentBehaviors.getInstance(PREFIX);
 </script>
 ```
+
+### Skipping auto-validation for a specific element
+Sometimes, you might want to skip the validation for a specific element. To
+achieve this, you can add the `data-skipautovalidation="true"` attribute to your
+HTML element, and `taphandle` will not validate that form element.
+
+```
+<!-- taphandle will not validate the following password field -->
+<input type="password" id="text-field-password" value="password" placeholder="" class="" data-skipautovalidation="true">
+<i id="eye-icon" class="fa fa-fw fa-eye field-icon MyPrefix-show_password" aria-label="password-visibility-control" aria-hidden="true" aria-controls="text-field-password"></i>'
+```

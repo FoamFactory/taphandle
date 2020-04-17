@@ -26,13 +26,13 @@ describe ('Username', () => {
         document.body.innerHTML =
         '<div class="field">' +
         '  <label class="label">Username</label>' +
-        '  <input type="username" id="test-username" value="" placeholder="Please enter your username" class="ninkasi_usernameField is-danger input" data-skipautovalidation required>' +
+        '  <input type="username" id="test-username" value="" placeholder="Please enter your username" class="ninkasi_usernameField is-danger input" data-skipautovalidation="true" required>' +
         '  <p id="usernameErrorMessage" class="ninkasi_formFieldMessage help is-danger">Username not valid</p>' +
         '</div>';
       });
 
       it ('should not try to auto-validate that field', () => {
-        ComponentBehaviors.init(PREFIX);
+        ComponentBehaviors.getInstance(PREFIX);
 
         let usernameField = document.getElementById('test-username');
         let messageElement = document.getElementById('usernameErrorMessage');

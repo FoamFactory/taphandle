@@ -24,15 +24,12 @@ export class FieldValidator extends Behavior {
   }
 
   static removeAllErrors(className) {
-    $(`.${className}`).each(() => {
-      let skipAVFlag = $(this).data('skipautovalidation');
+    $(`.${className}`).each((index, element) => {
+      let skipAVFlag = $(element).data('skipautovalidation');
       if (!skipAVFlag) {
-        // Remove any field error messages by setting them to display: none and
-        // also remove any styling on the form field itself.
-        let ffSelector = `.${FieldValidator._prefix}_formFieldMessage`;
-        let messageElement = $(this).siblings(ffSelector);
-        $(messageElement).css('visibility', 'hidden');
-        $(this).removeClass(FieldValidator._fieldMessageErrorClass);
+        let ffSelector = `.${FieldValidator._fieldMessageClass}`;
+        $(element).siblings(ffSelector).css('visibility', 'hidden');
+        $(element).removeClass(FieldValidator._fieldMessageErrorClass);
       }
     });
   }
@@ -42,7 +39,7 @@ export class FieldValidator extends Behavior {
     let ffSelector = `.${FieldValidator._prefix}_formFieldMessage`;
     let messageElement = $(target).siblings(ffSelector);
 
-    let skipAVFlag = $(this).data('skipautovalidation');
+    let skipAVFlag = $(target).data('skipautovalidation');
     if (!skipAVFlag) {
       delegateClass.validate(target, messageElement);
     }
