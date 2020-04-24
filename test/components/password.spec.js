@@ -1,4 +1,5 @@
 import { ComponentBehaviors } from '../../src';
+import { Password } from '../../src/behavior/components/validation/password';
 
 import _ from 'lodash';
 import $ from 'jquery';
@@ -13,28 +14,39 @@ describe ('Password', () => {
       '<div class="field">'+
         '<label class="label">Password</label>' +
         '<input type="password" id="text-field-password" value="password" placeholder="" class="ninkasi_passwordField input" data-shouldmatch="text-field-password-confirmation" required>' +
-        '<i id="eye-icon" class="fa fa-fw fa-eye field-icon ninkasi_show-password" aria-label="password-visibility-control" aria-hidden="true" aria-controls="text-field-password"></i>' +
+        '<i id="eye-icon-password" class="fa fa-fw fa-eye field-icon ninkasi_show-password" aria-label="password-visibility-control" aria-hidden="true" aria-controls="text-field-password"></i>' +
         '<p id="password-error-message" class="ninkasi_formFieldMessage help is-danger">Please enter a password</p>' +
       '</div>' +
       '<div class="field">' +
         '<label class="label">Password Confirmation</label>' +
         '<input type="password" id="text-field-password-confirmation" value="" placeholder="" class="ninkasi_passwordConfirmationField input" data-shouldmatch="text-field-password" required>' +
-        '<i id="eye-icon" class="fa fa-fw fa-eye field-icon ninkasi_show-password" aria-label="password-visibility-control" aria-hidden="true" aria-controls="text-field-password-confirmation"></i>' +
+        '<i id="eye-icon-passwordConfirmation" class="fa fa-fw fa-eye field-icon ninkasi_show-password" aria-label="password-visibility-control" aria-hidden="true" aria-controls="text-field-password-confirmation"></i>' +
         '<p id="password-confirmation-message" class="ninkasi_formFieldMessage help is-danger">Please enter a password confirmation</p>' +
       '</div>';
   });
 
-  it ('should switch the icon when the show password icon is clicked', () => {
-    ComponentBehaviors.init(PREFIX);
+  describe ('after initialization', () => {
+    beforeEach(() => {
+      ComponentBehaviors.getInstance(PREFIX);
+    });
 
-    let eyeIcon = document.getElementById('eye-icon');
-    expect(eyeIcon).not.toBeNull();
+    it ('should switch the icon when the show password icon is clicked', () => {
+      // TODO_jwir3: There's a bug here. If ComponentBehaviors.getInstance() is
+      // called one or more times _BEFORE_ this test, then the test fails.
 
-    eyeIcon.click();
+      let eyeIcon = document.getElementById('eye-icon-password');
+      expect(eyeIcon).not.toBeNull();
 
-    eyeIcon = document.getElementById('eye-icon');
-    expect(eyeIcon).not.toBeNull();
-    expect(_.values(eyeIcon.classList)).toEqual(expect.arrayContaining(['fa-eye-slash']));
+      eyeIcon.click();
+
+      eyeIcon = document.getElementById('eye-icon-password');
+      expect(eyeIcon).not.toBeNull();
+      expect(_.values(eyeIcon.classList)).toEqual(expect.arrayContaining(['fa-eye-slash']));
+    });
+
+    it ('the selector for a Password object should be ["password", "ninkasi_passwordField"]', () => {
+      expect(Password.getSelector()).toStrictEqual(["password", "ninkasi_passwordField"]);
+    });
   });
 
   describe ('when validating the password', () => {

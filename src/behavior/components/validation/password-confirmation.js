@@ -1,5 +1,5 @@
 import { FieldValidator } from './field-validator';
-import { Behavior } from '../behavior';
+import { Behavior } from '../../behavior';
 import { Password } from './password';
 import $ from 'jquery';
 
@@ -35,8 +35,11 @@ export class PasswordConfirmation extends FieldValidator {
         let pwMessageElement = $(elementToMatch).siblings(ffSelector);
         FieldValidator.disableErrorMessage(elementToMatch, pwMessageElement,
                                            Password);
-
       }
     }
+  }
+
+  static getSelector() {
+    return ['password', `${FieldValidator._prefix}_passwordConfirmationField`];
   }
 }

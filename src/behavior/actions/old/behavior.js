@@ -11,7 +11,6 @@ const Behavior = require('receptor/behavior');
 const sequence = (...seq) => function callHooks(target = document.body) {
   seq.forEach((method) => {
     if (typeof this[method] === 'function') {
-      console.log("Calling " + this[method]);
       this[method].call(this, target);
     }
   });

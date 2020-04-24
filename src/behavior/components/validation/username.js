@@ -1,11 +1,10 @@
 import { FieldValidator } from './field-validator';
-import { Behavior } from '../behavior';
+import { Behavior } from '../../behavior';
 import $ from 'jquery';
 
 export class Username extends FieldValidator {
   constructor(prefix, options) {
     Username._defaultValueMissingMessage = 'Please enter a username';
-    Username._defaultMatchFailedMessage = options['defaultMatchFailedMessage'];
 
     super(prefix, 'text', `${prefix}_usernameField`, options);
   }
@@ -22,5 +21,9 @@ export class Username extends FieldValidator {
     } else {
       FieldValidator.disableErrorMessage(element, messageElement, Username);
     }
+  }
+
+  static getSelector() {
+    return ['text', `${FieldValidator._prefix}_usernameField`];
   }
 }

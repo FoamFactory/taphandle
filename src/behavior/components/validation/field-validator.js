@@ -1,10 +1,14 @@
-import { Behavior } from '../behavior';
+import { Behavior } from '../../behavior';
+import { ComponentBehaviors } from '../../';
 import $ from 'jquery';
 
 export class FieldValidator extends Behavior {
-  constructor(prefix, type, className, options) {
+  constructor(prefix, expectedInputType, className, options) {
+    if (!options) {
+      options = ComponentBehaviors.getDefaultOptions(prefix);
+    }
+
     FieldValidator._prefix = prefix;
-    FieldValidator._expectedInputType = type;
     FieldValidator._fieldMessageClass = options['fieldMessageClass'];
     FieldValidator._fieldMessageErrorClass = options['fieldErrorClass'];
 
@@ -15,11 +19,16 @@ export class FieldValidator extends Behavior {
       FieldValidator.changed(event, delegateClass);
     };
 
-    FieldValidator.removeAllErrors(type, className);
+    let selector = `input[type="${expectedInputType}"]`;
+    if (className != null) {
+      selector = selector + `.${className}`;
+    }
+
+    FieldValidator.removeAllErrors(expectedInputType, className);
 
     super({
       ['change']: {
-        [`.${className}`]: changedMethod
+        [selector]: changedMethod
       },
     });
   }
@@ -59,10 +68,6 @@ export class FieldValidator extends Behavior {
     }
   }
 
-  static validate(element, messageElement) {
-    throw 'Unimplemented. You want to implement this in your subclass of FieldValidator';
-  }
-
   static enableErrorMessage(element, messageElement, delegateClass, message) {
     $(element).addClass(delegateClass._fieldMessageErrorClass);
     $(messageElement).text(message);
@@ -72,5 +77,13 @@ export class FieldValidator extends Behavior {
   static disableErrorMessage(element, messageElement, delegateClass) {
     $(element).removeClass(delegateClass._fieldMessageErrorClass);
     $(messageElement).css('visibility', 'hidden');
+  }
+
+  static validate(element, messageElement) {
+    throw 'Unimplemented. You want to implement this in your subclass of FieldValidator';
+  }
+
+  static getSelector() {
+    throw 'Unimplemented. You want to implement this in your subclass of FieldValidator';
   }
 }

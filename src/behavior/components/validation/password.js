@@ -64,4 +64,8 @@ export class Password extends FieldValidator {
 
     return null;
   }
+
+  static getSelector() {
+    return ['password', `${FieldValidator._prefix}_passwordField`];
+  }
 }
