@@ -19,4 +19,15 @@ describe ('FieldValidator', () => {
       expect(() => { FieldValidator.validate(null, null); }).toThrow(UNIMPLEMENTED_ERROR);
     });
   });
+
+  describe('getRegisteredClassNames()', () => {
+    it ('should show there are two registered class names', () => {
+      ComponentBehaviors.getInstance(PREFIX);
+
+      let classNames = FieldValidator.getRegisteredClassNames();
+      expect(Object.keys(classNames).length).toBe(2);
+      expect(classNames['ninkasi_passwordConfirmationField']).toBeDefined();
+      expect(classNames['ninkasi_usernameField']).toBeDefined();
+    });
+  });
 });

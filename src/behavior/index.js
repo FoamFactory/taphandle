@@ -1,3 +1,4 @@
+import { FieldValidator } from './components/validation/field-validator';
 import { Password } from './components/validation/password';
 import { PasswordConfirmation } from './components/validation/password-confirmation';
 import { PasswordRevealIndicator } from './components/password-reveal-indicator';
@@ -24,6 +25,16 @@ export class ComponentBehaviors {
     ComponentBehaviors._behaviors = [];
 
     Object.assign(ComponentBehaviors._options, options);
+
+    // Initialize all of the field validators with appropriate class names, if
+    // they have one.
+    FieldValidator.setPrefix(prefix);
+    for (let nextComponent in components) {
+      if (components[nextComponent].prototype instanceof FieldValidator) {
+        FieldValidator.registerClassNameForType(components[nextComponent].getSelector()[1],
+                                                components[nextComponent])
+      }
+    }
 
     ComponentBehaviors._setupComponentsOnDomReady();
   }

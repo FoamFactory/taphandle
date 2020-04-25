@@ -13,7 +13,7 @@ describe ('Password', () => {
     document.body.innerHTML =
       '<div class="field">'+
         '<label class="label">Password</label>' +
-        '<input type="password" id="text-field-password" value="password" placeholder="" class="ninkasi_passwordField input" data-shouldmatch="text-field-password-confirmation" required>' +
+        '<input type="password" id="text-field-password" value="password" placeholder="" class="input" data-shouldmatch="text-field-password-confirmation" required>' +
         '<i id="eye-icon-password" class="fa fa-fw fa-eye field-icon ninkasi_show-password" aria-label="password-visibility-control" aria-hidden="true" aria-controls="text-field-password"></i>' +
         '<p id="password-error-message" class="ninkasi_formFieldMessage help is-danger">Please enter a password</p>' +
       '</div>' +
@@ -44,8 +44,8 @@ describe ('Password', () => {
       expect(_.values(eyeIcon.classList)).toEqual(expect.arrayContaining(['fa-eye-slash']));
     });
 
-    it ('the selector for a Password object should be ["password", "ninkasi_passwordField"]', () => {
-      expect(Password.getSelector()).toStrictEqual(["password", "ninkasi_passwordField"]);
+    it ('the selector for a Password object should be ["password", null]', () => {
+      expect(Password.getSelector()).toStrictEqual(["password", null]);
     });
   });
 

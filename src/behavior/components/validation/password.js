@@ -7,7 +7,7 @@ export class Password extends FieldValidator {
     Password._defaultValueMissingMessage = 'Password missing';
     Password._defaultMatchFailedMessage = options['defaultMatchFailedMessage'];
 
-    super(prefix, 'password', `${prefix}_passwordField`, options);
+    super(prefix, 'password', null, options);
   }
 
   static validate(element, messageElement) {
@@ -66,6 +66,6 @@ export class Password extends FieldValidator {
   }
 
   static getSelector() {
-    return ['password', `${FieldValidator._prefix}_passwordField`];
+    return ['password', null];
   }
 }
