@@ -1,5 +1,5 @@
-import { ComponentBehaviors } from '../../src';
-import { Username } from '../../src/behavior/components/validation/username';
+import { ComponentBehaviors } from '../../../src';
+import { Username } from '../../../src/behavior/components/validation/username';
 
 import _ from 'lodash';
 import $ from 'jquery';

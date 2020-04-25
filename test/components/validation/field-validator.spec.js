@@ -1,5 +1,5 @@
-import { ComponentBehaviors } from '../../src';
-import { FieldValidator } from '../../src/behavior/components/validation/field-validator';
+import { ComponentBehaviors } from '../../../src';
+import { FieldValidator } from '../../../src/behavior/components/validation/field-validator';
 
 import _ from 'lodash';
 import $ from 'jquery';
