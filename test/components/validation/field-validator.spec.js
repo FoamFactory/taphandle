@@ -14,12 +14,6 @@ describe ('FieldValidator', () => {
     });
   });
 
-  describe ('validate()', () => {
-    it ('should throw an exception if called directly', () => {
-      expect(() => { FieldValidator.validate(null, null); }).toThrow(UNIMPLEMENTED_ERROR);
-    });
-  });
-
   describe('getRegisteredClassNames()', () => {
     it ('should show there are two registered class names', () => {
       ComponentBehaviors.getInstance(PREFIX);

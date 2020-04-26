@@ -11,17 +11,15 @@ export class PasswordConfirmation extends FieldValidator {
   }
 
   static validate(element, messageElement) {
+    let requiredValidation = super.validate(element, messageElement);
+
     let requiredMatchValid = Password.checkRequiredMatchValid(element);
 
-    if (element.validity.valueMissing) {
-      let message = messageElement.text();
-      if (message.length === 0) {
-        message = PasswordConfirmation._defaultValueMissingMessage;
-      }
+    if (!requiredValidation) {
+      return false;
+    }
 
-      FieldValidator.enableErrorMessage(element, messageElement,
-                                        PasswordConfirmation, message);
-    } else if (!requiredMatchValid) {
+    if (!requiredMatchValid) {
       FieldValidator.enableErrorMessage(element, messageElement,
                                         PasswordConfirmation,
                                         Password._defaultMatchFailedMessage);

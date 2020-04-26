@@ -1,5 +1,6 @@
 import { Behavior } from '../../behavior';
 import { ComponentBehaviors } from '../../';
+
 import $ from 'jquery';
 
 export class FieldValidator extends Behavior {
@@ -83,8 +84,47 @@ export class FieldValidator extends Behavior {
     $(messageElement).css('visibility', 'hidden');
   }
 
+  /**
+   * Validate a field.
+   *
+   * This portion only validates the existence of something in the field, if the
+   * field is marked as required. Individual sub-class implementations can be
+   * more specific about validation.
+   *
+   * @param  {DOMElement} element The element to validate
+   * @param  {DOMElement} messageElement The element that will contain the error
+   *         message, if one should be set.
+   */
   static validate(element, messageElement) {
-    throw 'Unimplemented. You want to implement this in your subclass of FieldValidator';
+    let classNameRegEx = /(?:\S+\s+){1}([A-Z$][0-9a-zA-Z_$]*)/;
+    let className = classNameRegEx.exec(this.toString())[1];
+
+    let classNameFile = className.replace(/^([A-Z])/, function(match) {
+      return match.toLowerCase();
+    });
+
+    classNameFile = classNameFile.replace(/([A-Z])/g, function(match) {
+      return "-" + match.toLowerCase();
+    });
+
+    let clazz = eval (`require('./${classNameFile}');`);
+    let defaultValueMissingMessage = clazz[className]._defaultValueMissingMessage;
+
+    let message = messageElement.text();
+    if (element.validity.valueMissing) {
+      if (messageElement.text().length === 0) {
+        message = defaultValueMissingMessage;
+      }
+
+      FieldValidator.enableErrorMessage(element, messageElement,
+                                        clazz[className], message);
+      return false;
+    } else {
+      FieldValidator.disableErrorMessage(element, messageElement,
+                                         clazz[className]);
+
+      return true;
+    }
   }
 
   static getSelector() {
