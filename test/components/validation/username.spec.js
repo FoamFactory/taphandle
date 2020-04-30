@@ -89,25 +89,6 @@ describe ('Username', () => {
     });
 
     describe('where the input is empty', () => {
-      describe ('when the error message is already populated', () => {
-        it ('should display the specified error message under the username field', () => {
-          ComponentBehaviors.init(PREFIX);
-
-          let usernameField = document.getElementById('test-username');
-          expect(usernameField).not.toBeNull();
-          expect(_.values(usernameField.classList)).not.toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
-
-          let messageElement = document.getElementById('usernameErrorMessage');
-
-          usernameField.value = '';
-          let changeEvent = new window.Event('change', {bubbles: true});
-          usernameField.dispatchEvent(changeEvent);
-
-          expect($(messageElement).text()).toBe('Username not valid');
-          expect(_.values(usernameField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
-        });
-      });
-
       describe ('when the error message has not yet been populated', () => {
         beforeEach(() => {
           document.body.innerHTML =

@@ -1,6 +1,5 @@
 import { Behavior } from '../../behavior';
 import { ComponentBehaviors } from '../../';
-
 import $ from 'jquery';
 
 export class FieldValidator extends Behavior {
@@ -20,14 +19,7 @@ export class FieldValidator extends Behavior {
       FieldValidator.changed(event, delegateClass);
     };
 
-    let selector = `input[type="${expectedInputType}"]`;
-    if (className != null) {
-      selector = selector + `.${className}`;
-    } else {
-      for (let className in FieldValidator.getRegisteredClassNames()) {
-        selector = selector + `:not(.${className})`;
-      }
-    }
+    let selector = FieldValidator.getCSSSelector(expectedInputType, className);
 
     FieldValidator.removeAllErrors(expectedInputType, className);
 
@@ -39,6 +31,7 @@ export class FieldValidator extends Behavior {
   }
 
   static removeAllErrors(expectedInputType, className) {
+    // TODO_jwir3: There is a bug here now that we can not have class names.
     if (!className) {
       $(`input[type=${expectedInputType}]`).each((index, element) => {
         FieldValidator.removeAllErrorsOnElement($(element));
@@ -69,7 +62,9 @@ export class FieldValidator extends Behavior {
 
     let skipAVFlag = $(target).data('skipautovalidation');
     if (!skipAVFlag) {
-      delegateClass.validate(target, messageElement);
+      let valid = delegateClass.validate(target);
+
+      delegateClass.setOrClearValidityMessage(valid, target, messageElement);
     }
   }
 
@@ -92,39 +87,18 @@ export class FieldValidator extends Behavior {
    * more specific about validation.
    *
    * @param  {DOMElement} element The element to validate
-   * @param  {DOMElement} messageElement The element that will contain the error
-   *         message, if one should be set.
+   * @param  {jQuery.Element} messageElement The element that will contain the
+   *         error message, if one should be set.
+   *
+   * @return {String} If valid, an empty string; a short descriptor as to why
+   *         validation failed, otherwise.
    */
-  static validate(element, messageElement) {
-    let classNameRegEx = /(?:\S+\s+){1}([A-Z$][0-9a-zA-Z_$]*)/;
-    let className = classNameRegEx.exec(this.toString())[1];
-
-    let classNameFile = className.replace(/^([A-Z])/, function(match) {
-      return match.toLowerCase();
-    });
-
-    classNameFile = classNameFile.replace(/([A-Z])/g, function(match) {
-      return "-" + match.toLowerCase();
-    });
-
-    let clazz = eval (`require('./${classNameFile}');`);
-    let defaultValueMissingMessage = clazz[className]._defaultValueMissingMessage;
-
-    let message = messageElement.text();
+  static validate(element) {
     if (element.validity.valueMissing) {
-      if (messageElement.text().length === 0) {
-        message = defaultValueMissingMessage;
-      }
-
-      FieldValidator.enableErrorMessage(element, messageElement,
-                                        clazz[className], message);
       return false;
-    } else {
-      FieldValidator.disableErrorMessage(element, messageElement,
-                                         clazz[className]);
-
-      return true;
     }
+
+    return true;
   }
 
   static getSelector() {
@@ -177,5 +151,18 @@ export class FieldValidator extends Behavior {
     if (className && !FieldValidator._registeredClassNames[className]) {
       FieldValidator._registeredClassNames[className] = type;
     }
+  }
+
+  static getCSSSelector(expectedInputType, className) {
+    let selector = `input[type="${expectedInputType}"]`;
+    if (className != null) {
+      selector = selector + `.${className}`;
+    } else {
+      for (let className in FieldValidator.getRegisteredClassNames()) {
+        selector = selector + `:not(.${className})`;
+      }
+    }
+
+    return selector;
   }
 }

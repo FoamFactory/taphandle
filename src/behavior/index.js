@@ -1,4 +1,5 @@
 import { FieldValidator } from './components/validation/field-validator';
+import { FullNameValidator } from './components/validation/full-name-validator';
 import { Password } from './components/validation/password';
 import { PasswordConfirmation } from './components/validation/password-confirmation';
 import { PasswordRevealIndicator } from './components/password-reveal-indicator';
@@ -9,6 +10,7 @@ const components = {
   // banner,
   // footer,
   // navigation,
+  "fullname": FullNameValidator,
   "password": Password,
   "password-confirmation": PasswordConfirmation,
   "password-reveal-indicator": PasswordRevealIndicator,
@@ -86,7 +88,6 @@ export class ComponentBehaviors {
       }
 
       ComponentBehaviors._behaviors[target].push(component);
-      // console.trace(ComponentBehaviors._behaviors);
     }
   }
 

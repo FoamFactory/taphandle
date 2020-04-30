@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Full Name Field Examples</title>
+  <script src="../lib/index-web.js"></script>
+
+  <!-- The following are Bulma CSS files. You do not need to include them in your HTML files. -->
+  <link rel="stylesheet" href="../node_modules/bulma/css/bulma.min.css">
+  <link rel="stylesheet" href="../node_modules/bulmaswatch/materia/bulmaswatch.min.css">
+
+  <style>
+    body {
+      margin: 1em;
+    }
+
+    body > * {
+      margin-bottom: 1em;
+    }
+
+    .field {
+      width: 40%;
+    }
+
+    .field-and-explanation {
+      margin-bottom: 4em;
+    }
+
+    .field-and-explanation > .explanation {
+      margin-bottom: 1em;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="title is-1">Full Name Field Examples</h1>
+  <article class="message">
+    <div class="message-header">
+      <p>Note</p>
+    </div>
+    <div class="message-body">
+      For all examples, the prefix used is <code>ninkasi</code>.
+    </div>
+  </article>
+
+
+  <div class="field-and-explanation">
+    <p class="explanation">The following is an example of how to use Taphandle with a field for validation that expects to have a user's full (first and last) name. A full name field is defined as an <code>&lt;input&gt;</code> tag with <code>type="text"</code> and a class of <code>PREFIX_fullNameField</code>. Note that "Full Names" are names with at least two words that may include suffixes such as "Jr.", "Sr.", and "III", but not numerals (e.g. "3").</p>
+    <div class="field">
+      <label class="label">Full Name</label>
+      <input type="text" id="test-fullname" value="" placeholder="Please enter your full name" class="ninkasi_fullNameField input" required>
+      <p class="ninkasi_formFieldMessage help is-danger"></p>
+    </div>
+  </div>
+
+  <script>
+    taphandle.ComponentBehaviors.getInstance('ninkasi', {
+      'fieldErrorClass': 'is-danger'
+    });
+  </script>
+</body>
+</html>

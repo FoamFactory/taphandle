@@ -3,36 +3,35 @@ import { PasswordConfirmation } from './password-confirmation';
 import $ from 'jquery';
 
 export class Password extends FieldValidator {
+  static REFERENCED_CONFIRMATION_DOES_NOT_EXIST = "The referenced password confirmation field does not exist in the document";
+
   constructor(prefix, options) {
     Password._defaultValueMissingMessage = 'Password missing';
     Password._defaultMatchFailedMessage = options['defaultMatchFailedMessage'];
 
     super(prefix, 'password', null, options);
+
+    $(FieldValidator.getCSSSelector('password', null)).each(function () {
+      if ($(this).data('shouldmatch') && !Password._getElementToMatch($(this))) {
+        throw Password.REFERENCED_CONFIRMATION_DOES_NOT_EXIST;
+      }
+    });
   }
 
-  static validate(element, messageElement) {
-    let requiredValidation = super.validate(element, messageElement);
+  static validate(element) {
+    let requiredValuePresent = super.validate(element);
+
+    if (!requiredValuePresent) {
+      return Password._defaultValueMissingMessage;
+    }
+
     let requiredMatchValid = Password.checkRequiredMatchValid(element);
 
-    if (!requiredValidation) {
-      return false;
-    }
-
     if (!requiredMatchValid) {
-      FieldValidator.enableErrorMessage(element, messageElement, Password,
-                                        Password._defaultMatchFailedMessage);
-    } else {
-      FieldValidator.disableErrorMessage(element, messageElement, Password);
-
-      // Make sure the matching element's validity message is cleared.
-      let ffSelector = `.${FieldValidator._prefix}_formFieldMessage`
-      let elementToMatch = Password._getElementToMatch(element);
-      if (elementToMatch) {
-        let pwMessageElement = $(elementToMatch).siblings(ffSelector);
-        FieldValidator.disableErrorMessage(elementToMatch, pwMessageElement,
-                                           PasswordConfirmation);
-      }
+      return Password._defaultMatchFailedMessage;
     }
+
+    return true;
   }
 
   static checkRequiredMatchValid(element) {
@@ -60,6 +59,26 @@ export class Password extends FieldValidator {
     }
 
     return null;
+  }
+
+  static setOrClearValidityMessage(validityMessage, element, messageElement) {
+    if (validityMessage !== true) {
+      let message = validityMessage;
+
+      FieldValidator.enableErrorMessage(element, messageElement,
+                                        Password, message);
+    } else {
+      FieldValidator.disableErrorMessage(element, messageElement, Password);
+
+      // Also clear the confirmation field's error message
+      let ffSelector = `.${FieldValidator._prefix}_formFieldMessage`
+      let elementToMatch = Password._getElementToMatch(element);
+      if (elementToMatch) {
+        let pwMessageElement = $(elementToMatch).siblings(ffSelector);
+        FieldValidator.disableErrorMessage(elementToMatch, pwMessageElement,
+                                           PasswordConfirmation);
+      }
+    }
   }
 
   static getSelector() {

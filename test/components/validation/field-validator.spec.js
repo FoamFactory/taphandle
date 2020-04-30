@@ -19,7 +19,8 @@ describe ('FieldValidator', () => {
       ComponentBehaviors.getInstance(PREFIX);
 
       let classNames = FieldValidator.getRegisteredClassNames();
-      expect(Object.keys(classNames).length).toBe(2);
+      expect(Object.keys(classNames).length).toBe(3);
+      expect(classNames['ninkasi_fullNameField']).toBeDefined();
       expect(classNames['ninkasi_passwordConfirmationField']).toBeDefined();
       expect(classNames['ninkasi_usernameField']).toBeDefined();
     });
