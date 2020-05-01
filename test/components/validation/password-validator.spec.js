@@ -1,13 +1,13 @@
 import { ComponentBehaviors } from '../../../src';
-import { Password } from '../../../src/behavior/components/validation/password';
-import { PasswordConfirmation } from '../../../src/behavior/components/validation/password-confirmation';
+import { PasswordValidator } from '../../../src/behavior/components/validation/password-validator';
+import { PasswordConfirmationValidator } from '../../../src/behavior/components/validation/password-confirmation-validator';
 
 import _ from 'lodash';
 import $ from 'jquery';
 
 const PREFIX = 'ninkasi';
 
-describe ('Password', () => {
+describe ('PasswordValidator', () => {
   beforeEach(() => {
     expect(document).not.toBeNull();
 
@@ -47,7 +47,7 @@ describe ('Password', () => {
       });
 
       it ('the selector for a Password object should be ["password", null]', () => {
-        expect(Password.getSelector()).toStrictEqual(["password", null]);
+        expect(PasswordValidator.getSelector()).toStrictEqual(["password", null]);
       });
     });
   });
@@ -65,7 +65,7 @@ describe ('Password', () => {
       })
 
       it ('should throw an exception', () => {
-        expect(() => { ComponentBehaviors.getInstance(PREFIX); }).toThrow(PasswordConfirmation.NO_PASSWORD_ERROR);
+        expect(() => { ComponentBehaviors.getInstance(PREFIX); }).toThrow(PasswordConfirmationValidator.NO_PASSWORD_ERROR);
       });
     });
 
@@ -82,7 +82,7 @@ describe ('Password', () => {
         });
 
         it ('should throw an exception', () => {
-          expect(() => { ComponentBehaviors.getInstance(PREFIX); }).toThrow(Password.REFERENCED_CONFIRMATION_DOES_NOT_EXIST);
+          expect(() => { ComponentBehaviors.getInstance(PREFIX); }).toThrow(PasswordValidator.REFERENCED_CONFIRMATION_DOES_NOT_EXIST);
         });
       });
     });
@@ -296,7 +296,7 @@ describe ('Password', () => {
 
           let changeEvent = new window.Event('change', {bubbles: true});
 
-          expect(() => { confField.dispatchEvent(changeEvent); }).toThrow(PasswordConfirmation.NO_PASSWORD_ERROR);
+          expect(() => { confField.dispatchEvent(changeEvent); }).toThrow(PasswordConfirmationValidator.NO_PASSWORD_ERROR);
         });
       });
     });

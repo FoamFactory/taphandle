@@ -1,22 +1,22 @@
 import { FieldValidator } from './field-validator';
 import { Behavior } from '../../behavior';
-import { Password } from './password';
+import { PasswordValidator } from './password-validator';
 import $ from 'jquery';
 
-export class PasswordConfirmation extends FieldValidator {
+export class PasswordConfirmationValidator extends FieldValidator {
   static NO_PASSWORD_ERROR = 'A password confirmation validator must be set up with a password field to confirm. One was not found when initializing the document.'
 
   constructor(prefix, options) {
-    PasswordConfirmation._defaultValueMissingMessage = 'Please enter a password confirmation';
+    PasswordConfirmationValidator._defaultValueMissingMessage = 'Please enter a password confirmation';
 
     super(prefix, 'password', `${prefix}_passwordConfirmationField`, options);
 
     // Make sure each password confirmation has a password to confirm
     $(`.${prefix}_passwordConfirmationField`).each(function (index) {
-      let elementToMatch = Password._getElementToMatch($(this));
+      let elementToMatch = PasswordValidator._getElementToMatch($(this));
 
       if (!elementToMatch) {
-        throw PasswordConfirmation.NO_PASSWORD_ERROR;
+        throw PasswordConfirmationValidator.NO_PASSWORD_ERROR;
       }
     });
   }
@@ -25,13 +25,13 @@ export class PasswordConfirmation extends FieldValidator {
     let requiredValuePresent = super.validate(element);
 
     if (!requiredValuePresent) {
-      return PasswordConfirmation._defaultValueMissingMessage;
+      return PasswordConfirmationValidator._defaultValueMissingMessage;
     }
 
-    let requiredMatchValid = Password.checkRequiredMatchValid(element);
+    let requiredMatchValid = PasswordValidator.checkRequiredMatchValid(element);
 
     if (!requiredMatchValid) {
-      return Password._defaultMatchFailedMessage;
+      return PasswordValidator._defaultMatchFailedMessage;
     }
 
     return true;
@@ -43,21 +43,21 @@ export class PasswordConfirmation extends FieldValidator {
       let message = validityMessage;
 
       FieldValidator.enableErrorMessage(element, messageElement,
-                                        PasswordConfirmation, message);
+                                        PasswordConfirmationValidator, message);
     } else {
       FieldValidator.disableErrorMessage(element, messageElement,
-                                         PasswordConfirmation);
+                                         PasswordConfirmationValidator);
 
       // Also clear the password field's error message
       let ffSelector = `.${FieldValidator._prefix}_formFieldMessage`
-      let elementToMatch = Password._getElementToMatch(element);
+      let elementToMatch = PasswordValidator._getElementToMatch(element);
       if (elementToMatch) {
         let pwMessageElement = $(elementToMatch).siblings(ffSelector);
         FieldValidator.disableErrorMessage(elementToMatch, pwMessageElement,
-                                           Password);
+                                           PasswordValidator);
       } else {
         // The password field must have been removed from the DOM
-        throw PasswordConfirmation.NO_PASSWORD_ERROR;
+        throw PasswordConfirmationValidator.NO_PASSWORD_ERROR;
       }
     }
   }

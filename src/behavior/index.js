@@ -1,7 +1,7 @@
 import { FieldValidator } from './components/validation/field-validator';
 import { FullNameValidator } from './components/validation/full-name-validator';
-import { Password } from './components/validation/password';
-import { PasswordConfirmation } from './components/validation/password-confirmation';
+import { PasswordValidator } from './components/validation/password-validator';
+import { PasswordConfirmationValidator } from './components/validation/password-confirmation-validator';
 import { PasswordRevealIndicator } from './components/password-reveal-indicator';
 import { Username } from './components/validation/username';
 
@@ -11,8 +11,8 @@ const components = {
   // footer,
   // navigation,
   "fullname": FullNameValidator,
-  "password": Password,
-  "password-confirmation": PasswordConfirmation,
+  "password": PasswordValidator,
+  "password-confirmation": PasswordConfirmationValidator,
   "password-reveal-indicator": PasswordRevealIndicator,
   "username": Username
   // search,
