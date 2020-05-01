@@ -1,24 +1,35 @@
-import { ComponentBehaviors } from '../../src';
+import { ComponentBehaviors } from '../../../src';
+import { UsernameValidator } from '../../../src/behavior/components/validation/username-validator';
 
 import _ from 'lodash';
 import $ from 'jquery';
 
 const PREFIX = 'ninkasi';
 
-describe ('Username', () => {
+describe ('UsernameValidator', () => {
   beforeEach(() => {
     expect(document).not.toBeNull();
     document.body.innerHTML =
     '<div class="field">' +
     '  <label class="label">Username</label>' +
-    '  <input type="username" id="test-username" value="" placeholder="Please enter your username" class="ninkasi_usernameField input" required>' +
+    '  <input type="text" id="test-username" value="" placeholder="Please enter your username" class="ninkasi_usernameField input" required>' +
     '  <p id="usernameErrorMessage" class="ninkasi_formFieldMessage help is-danger">Username not valid</p>' +
     '</div>';
   });
 
+  describe ('after initialization', () => {
+      it ('the selector for a UsernameValidator object should be ["text", "ninkasi_usernameField"]', () => {
+        ComponentBehaviors.getInstance(PREFIX);
+
+        expect(UsernameValidator.getSelector()).toStrictEqual(["text", "ninkasi_usernameField"]);
+      });
+  });
+
   describe('when the page first loads', () => {
     it ('should not have any fields for describing error messages', () => {
-      expect($('.form-field-error').length).toBe(0);
+      ComponentBehaviors.getInstance(PREFIX);
+
+      expect($('#usernameErrorMessage').css('visibility')).toBe('hidden');
     });
 
     describe ('when a username field has the skip flag in its data attributes', () => {
@@ -26,7 +37,7 @@ describe ('Username', () => {
         document.body.innerHTML =
         '<div class="field">' +
         '  <label class="label">Username</label>' +
-        '  <input type="username" id="test-username" value="" placeholder="Please enter your username" class="ninkasi_usernameField is-danger input" data-skipautovalidation="true" required>' +
+        '  <input type="text" id="test-username" value="" placeholder="Please enter your username" class="ninkasi_usernameField is-danger input" data-skipautovalidation="true" required>' +
         '  <p id="usernameErrorMessage" class="ninkasi_formFieldMessage help is-danger">Username not valid</p>' +
         '</div>';
       });
@@ -52,7 +63,7 @@ describe ('Username', () => {
         document.body.innerHTML =
         '<div class="field">' +
         '  <label class="label">Username</label>' +
-        '  <input type="username" id="test-username" value="" placeholder="Please enter your username" class="ninkasi_usernameField input" required>' +
+        '  <input type="text" id="test-username" value="" placeholder="Please enter your username" class="ninkasi_usernameField input" required>' +
         '  <p id="usernameErrorMessage" class="ninkasi_formFieldMessage usernameField help is-danger">Username not valid</p>' +
         '</div>';
 
@@ -78,31 +89,12 @@ describe ('Username', () => {
     });
 
     describe('where the input is empty', () => {
-      describe ('when the error message is already populated', () => {
-        it ('should display the specified error message under the username field', () => {
-          ComponentBehaviors.init(PREFIX);
-
-          let usernameField = document.getElementById('test-username');
-          expect(usernameField).not.toBeNull();
-          expect(_.values(usernameField.classList)).not.toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
-
-          let messageElement = document.getElementById('usernameErrorMessage');
-
-          usernameField.value = '';
-          let changeEvent = new window.Event('change', {bubbles: true});
-          usernameField.dispatchEvent(changeEvent);
-
-          expect($(messageElement).text()).toBe('Username not valid');
-          expect(_.values(usernameField.classList)).toEqual(expect.arrayContaining(['ninkasi_formFieldError']));
-        });
-      });
-
       describe ('when the error message has not yet been populated', () => {
         beforeEach(() => {
           document.body.innerHTML =
           '<div class="field">' +
           '  <label class="label">Username</label>' +
-          '  <input type="username" id="test-username" value="" placeholder="Please enter your username" class="ninkasi_usernameField input" required>' +
+          '  <input type="text" id="test-username" value="" placeholder="Please enter your username" class="ninkasi_usernameField input" required>' +
           '  <p id="usernameErrorMessage" class="ninkasi_formFieldMessage help is-danger"></p>' +
           '</div>';
         });

@@ -6,6 +6,7 @@
   "scripts": {
     "build": "babel src -d lib",
     "build:web": "yarn build && browserify --s taphandle lib/index.js > lib/index-web.js",
+    "build:all": "yarn build && yarn build:web",
     "clean": "rimraf lib",
     "test": "jest --useStderr --verbose",
     "test:coverage": "jest --coverage"
@@ -30,6 +31,7 @@
     "sinon": "^9.0.1"
   },
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@foamfactory/paulrevere": "1.0.1",
     "jquery": "^3.5.0",
     "receptor": "^1.0.0",

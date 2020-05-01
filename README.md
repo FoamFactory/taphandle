@@ -94,8 +94,9 @@ ComponentBehaviors.getInstance(PREFIX);
 ### Using the Web-Based Build
 `taphandle` also provides a browserified version of itself, called
 `index-web.js`, that you can copy directly from the `lib/` directory of the
-`master` branch of the `taphandle` [repository](https://github.com/FoamFactory/taphandle/blob/master/lib/index-web.js), by using the above import statement and
-`browserify`-ing your scripts yourself, or by importing directly using:
+`master` branch of the `taphandle` [repository](https://github.com/FoamFactory/taphandle/blob/master/lib/index-web.js),
+by using the above import statement and `browserify`-ing your scripts yourself,
+or by importing directly using:
 
 ```
 <script src="./node_modules/@foamfactory/taphandle/lib/index-web.js"></script>
@@ -122,3 +123,7 @@ HTML element, and `taphandle` will not validate that form element.
 <input type="password" id="text-field-password" value="password" placeholder="" class="" data-skipautovalidation="true">
 <i id="eye-icon" class="fa fa-fw fa-eye field-icon MyPrefix-show_password" aria-label="password-visibility-control" aria-hidden="true" aria-controls="text-field-password"></i>'
 ```
+
+## Examples
+Check out our [examples directory](examples/index.html) for examples on how to
+use `Taphandle`.
