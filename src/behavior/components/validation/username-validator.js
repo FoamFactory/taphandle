@@ -2,7 +2,7 @@ import { FieldValidator } from './field-validator';
 import { Behavior } from '../../behavior';
 import $ from 'jquery';
 
-export class Username extends FieldValidator {
+export class UsernameValidator extends FieldValidator {
   static _defaultValueMissingMessage = 'Please enter a username'
 
   constructor(prefix, options) {
@@ -13,7 +13,7 @@ export class Username extends FieldValidator {
     let requiredValuePresent = super.validate(element);
 
     if (!requiredValuePresent) {
-      return Username._defaultValueMissingMessage;
+      return UsernameValidator._defaultValueMissingMessage;
     }
 
     return true;
@@ -24,9 +24,10 @@ export class Username extends FieldValidator {
       let message = validityMessage;
 
       FieldValidator.enableErrorMessage(element, messageElement,
-                                        Username, message);
+                                        UsernameValidator, message);
     } else {
-      FieldValidator.disableErrorMessage(element, messageElement, Username);
+      FieldValidator.disableErrorMessage(element, messageElement,
+                                         UsernameValidator);
     }
   }
 

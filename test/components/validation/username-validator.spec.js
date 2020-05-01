@@ -1,12 +1,12 @@
 import { ComponentBehaviors } from '../../../src';
-import { Username } from '../../../src/behavior/components/validation/username';
+import { UsernameValidator } from '../../../src/behavior/components/validation/username-validator';
 
 import _ from 'lodash';
 import $ from 'jquery';
 
 const PREFIX = 'ninkasi';
 
-describe ('Username', () => {
+describe ('UsernameValidator', () => {
   beforeEach(() => {
     expect(document).not.toBeNull();
     document.body.innerHTML =
@@ -18,10 +18,10 @@ describe ('Username', () => {
   });
 
   describe ('after initialization', () => {
-      it ('the selector for a Username object should be ["text", "ninkasi_usernameField"]', () => {
+      it ('the selector for a UsernameValidator object should be ["text", "ninkasi_usernameField"]', () => {
         ComponentBehaviors.getInstance(PREFIX);
 
-        expect(Username.getSelector()).toStrictEqual(["text", "ninkasi_usernameField"]);
+        expect(UsernameValidator.getSelector()).toStrictEqual(["text", "ninkasi_usernameField"]);
       });
   });
 

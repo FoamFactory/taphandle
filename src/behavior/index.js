@@ -3,7 +3,7 @@ import { FullNameValidator } from './components/validation/full-name-validator';
 import { PasswordValidator } from './components/validation/password-validator';
 import { PasswordConfirmationValidator } from './components/validation/password-confirmation-validator';
 import { PasswordRevealIndicator } from './components/password-reveal-indicator';
-import { Username } from './components/validation/username';
+import { UsernameValidator } from './components/validation/username-validator';
 
 const components = {
   // accordion,
@@ -14,7 +14,7 @@ const components = {
   "password": PasswordValidator,
   "password-confirmation": PasswordConfirmationValidator,
   "password-reveal-indicator": PasswordRevealIndicator,
-  "username": Username
+  "username": UsernameValidator
   // search,
   // skipnav,
   // validator,
