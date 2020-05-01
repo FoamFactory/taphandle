@@ -1,5 +1,6 @@
 import { FieldValidator } from './components/validation/field-validator';
 import { FullNameValidator } from './components/validation/full-name-validator';
+import { GenericTextValidator } from './components/validation/generic-text-validator';
 import { PasswordValidator } from './components/validation/password-validator';
 import { PasswordConfirmationValidator } from './components/validation/password-confirmation-validator';
 import { PasswordRevealIndicator } from './components/password-reveal-indicator';
@@ -11,6 +12,7 @@ const components = {
   // footer,
   // navigation,
   "fullname": FullNameValidator,
+  "generictext": GenericTextValidator,
   "password": PasswordValidator,
   "password-confirmation": PasswordConfirmationValidator,
   "password-reveal-indicator": PasswordRevealIndicator,
