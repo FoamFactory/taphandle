@@ -1,17 +1,22 @@
-import { Password } from './components/password';
-import { PasswordConfirmation } from './components/password-confirmation';
+import { FieldValidator } from './components/validation/field-validator';
+import { FullNameValidator } from './components/validation/full-name-validator';
+import { GenericTextValidator } from './components/validation/generic-text-validator';
+import { PasswordValidator } from './components/validation/password-validator';
+import { PasswordConfirmationValidator } from './components/validation/password-confirmation-validator';
 import { PasswordRevealIndicator } from './components/password-reveal-indicator';
-import { Username } from './components/username';
+import { UsernameValidator } from './components/validation/username-validator';
 
 const components = {
   // accordion,
   // banner,
   // footer,
   // navigation,
-  "password": Password,
-  "password-confirmation": PasswordConfirmation,
+  "fullname": FullNameValidator,
+  "generictext": GenericTextValidator,
+  "password": PasswordValidator,
+  "password-confirmation": PasswordConfirmationValidator,
   "password-reveal-indicator": PasswordRevealIndicator,
-  "username": Username
+  "username": UsernameValidator
   // search,
   // skipnav,
   // validator,
@@ -20,14 +25,20 @@ const components = {
 export class ComponentBehaviors {
   static init(prefix, options) {
     ComponentBehaviors._prefix = prefix;
-    ComponentBehaviors._options = {
-      "fieldMessageClass": `${prefix}_formFieldMessage`,
-      "fieldMessageErrorClass": `${prefix}_formFieldErrorMessage`,
-      "defaultValueMissingMessage": "Please fill in this field",
-      "defaultMatchFailedMessage": "The field and its confirmation do not match"
-    };
+    ComponentBehaviors._options = ComponentBehaviors.getDefaultOptions(prefix);
+    ComponentBehaviors._behaviors = [];
 
     Object.assign(ComponentBehaviors._options, options);
+
+    // Initialize all of the field validators with appropriate class names, if
+    // they have one.
+    FieldValidator.setPrefix(prefix);
+    for (let nextComponent in components) {
+      if (components[nextComponent].prototype instanceof FieldValidator) {
+        FieldValidator.registerClassNameForType(components[nextComponent].getSelector()[1],
+                                                components[nextComponent])
+      }
+    }
 
     ComponentBehaviors._setupComponentsOnDomReady();
   }
@@ -37,8 +48,10 @@ export class ComponentBehaviors {
       const target = document.body;
       Object.keys(components)
         .forEach((key) => {
-          const behavior = new components[key](ComponentBehaviors._prefix, ComponentBehaviors._options);
-          behavior.on(target);
+          // if the target already has an on() handler for the given behavior,
+          // we shouldn't re-enable a new one.
+          ComponentBehaviors._enableComponentIfNotAlreadyEnabled(target,
+                                                                 components[key]);
         });
     } else {
       window.setTimeout(ComponentBehaviors._setupComponentsOnDomReady, 100);
@@ -61,5 +74,31 @@ export class ComponentBehaviors {
     }
 
     return ComponentBehaviors._instances[prefix];
+  }
+
+  static _enableComponentIfNotAlreadyEnabled(target, component) {
+    // console.log(`TARGET: ${target}, COMPONENT: ${component}`);
+
+    if (!(ComponentBehaviors._behaviors[target]
+         && ComponentBehaviors._behaviors[target].includes(component))) {
+      const behavior = new component(ComponentBehaviors._prefix,
+                                     ComponentBehaviors._options);
+      behavior.on(target);
+
+      if (!ComponentBehaviors._behaviors[target]) {
+        ComponentBehaviors._behaviors[target] = [];
+      }
+
+      ComponentBehaviors._behaviors[target].push(component);
+    }
+  }
+
+  static getDefaultOptions(prefix) {
+    return {
+      "fieldMessageClass": `${prefix}_formFieldMessage`,
+      "fieldErrorClass": `${prefix}_formFieldError`,
+      "defaultValueMissingMessage": "Please fill in this field",
+      "defaultMatchFailedMessage": "The field and its confirmation do not match"
+    };
   }
 }

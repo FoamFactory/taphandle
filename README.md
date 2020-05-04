@@ -1,6 +1,8 @@
 # taphandle
 A behavior-based event delegation library designed for [FoamFactory](foamfactory.io).
 
+[![Coverage Status](https://coveralls.io/repos/github/FoamFactory/taphandle/badge.svg)](https://coveralls.io/github/FoamFactory/taphandle)
+
 ## Introduction
 ### Basis
 This library is based off of scripts included with the
@@ -92,8 +94,9 @@ ComponentBehaviors.getInstance(PREFIX);
 ### Using the Web-Based Build
 `taphandle` also provides a browserified version of itself, called
 `index-web.js`, that you can copy directly from the `lib/` directory of the
-`master` branch of the `taphandle` [repository](https://github.com/FoamFactory/taphandle/blob/master/lib/index-web.js), by using the above import statement and
-`browserify`-ing your scripts yourself, or by importing directly using:
+`master` branch of the `taphandle` [repository](https://github.com/FoamFactory/taphandle/blob/master/lib/index-web.js),
+by using the above import statement and `browserify`-ing your scripts yourself,
+or by importing directly using:
 
 ```
 <script src="./node_modules/@foamfactory/taphandle/lib/index-web.js"></script>
@@ -109,3 +112,18 @@ your web application:
   taphandle.ComponentBehaviors.getInstance(PREFIX);
 </script>
 ```
+
+### Skipping auto-validation for a specific element
+Sometimes, you might want to skip the validation for a specific element. To
+achieve this, you can add the `data-skipautovalidation="true"` attribute to your
+HTML element, and `taphandle` will not validate that form element.
+
+```
+<!-- taphandle will not validate the following password field -->
+<input type="password" id="text-field-password" value="password" placeholder="" class="" data-skipautovalidation="true">
+<i id="eye-icon" class="fa fa-fw fa-eye field-icon MyPrefix-show_password" aria-label="password-visibility-control" aria-hidden="true" aria-controls="text-field-password"></i>'
+```
+
+## Examples
+Check out our [examples directory](examples/index.html) for examples on how to
+use `Taphandle`.
