@@ -43,13 +43,25 @@ export class FieldValidator extends Behavior {
     }
   }
 
+  static getMessageElementForTarget(target, messageSelector) {
+    let messageElement = $(target).siblings(messageSelector)
+
+    // Also check any cousin(s), if the message element isn't present
+    if (!messageElement[0]) {
+      messageElement = $(target).parent().siblings(messageSelector);
+    }
+
+    return messageElement;
+  }
+
   static removeAllErrorsOnElement(element) {
     let skipAVFlag = element.data('skipautovalidation');
     if (!skipAVFlag) {
       // Remove any field error messages by setting them to display: none and
       // also remove any styling on the form field itself.
-      let ffSelector = `.${FieldValidator._prefix}_formFieldMessage`;
-      let messageElement = element.siblings(ffSelector);
+      let messageSelector = `.${FieldValidator._prefix}_formFieldMessage`;
+      let messageElement
+        = FieldValidator.getMessageElementForTarget(element, messageSelector);
       $(messageElement).css('visibility', 'hidden');
       element.removeClass(FieldValidator._fieldMessageErrorClass);
     }
@@ -57,8 +69,9 @@ export class FieldValidator extends Behavior {
 
   static changed(event, delegateClass) {
     let target = event.target;
-    let ffSelector = `.${FieldValidator._prefix}_formFieldMessage`;
-    let messageElement = $(target).siblings(ffSelector);
+    let messageSelector = `.${FieldValidator._prefix}_formFieldMessage`;
+    let messageElement
+      = FieldValidator.getMessageElementForTarget(target, messageSelector);
 
     let skipAVFlag = $(target).data('skipautovalidation');
     if (!skipAVFlag) {
