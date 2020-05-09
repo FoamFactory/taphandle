@@ -3,6 +3,8 @@ import { ComponentBehaviors } from '../../';
 import $ from 'jquery';
 
 export class FieldValidator extends Behavior {
+  static UNIMPLEMENTED_ERROR = "Unimplemented. You must implement this in a subclass of FieldValidator"
+
   constructor(prefix, expectedInputType, className, options) {
     if (!options) {
       options = ComponentBehaviors.getDefaultOptions(prefix);
@@ -115,7 +117,7 @@ export class FieldValidator extends Behavior {
   }
 
   static getSelector() {
-    throw 'Unimplemented. You want to implement this in your subclass of FieldValidator';
+    throw FieldValidator.UNIMPLEMENTED_ERROR;
   }
 
   /**
