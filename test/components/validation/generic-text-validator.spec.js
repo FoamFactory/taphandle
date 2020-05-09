@@ -23,6 +23,10 @@ describe ('GenericTextValidator', () => {
 
         expect(GenericTextValidator.getSelector()).toStrictEqual(["text", null]);
       });
+
+      it ('should show that the element with id test-generic matches the selector for GenericTextValidators', () => {
+        expect(GenericTextValidator.doesElementMatchSelector($('#test-generic'))).toBe(true);
+      });
   });
 
   describe('when the page first loads', () => {

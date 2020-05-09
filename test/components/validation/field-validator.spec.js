@@ -24,4 +24,10 @@ describe ('FieldValidator', () => {
       expect(classNames['ninkasi_usernameField']).toBeDefined();
     });
   });
+
+  describe('doesElementMatchSelector()', () => {
+    it ('should throw an exception if called directly', () => {
+      expect(() => { FieldValidator.doesElementMatchSelector(null); }).toThrow(FieldValidator.UNIMPLEMENTED_ERROR);
+    });
+  });
 });
