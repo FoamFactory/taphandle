@@ -1,6 +1,6 @@
 {
   "name": "@foamfactory/taphandle",
-  "version": "1.6.1",
+  "version": "1.7.0-prerelease",
   "description": "A behavior-based event delegation library designed for FoamFactory",
   "main": "lib/index.js",
   "scripts": {
