@@ -110,12 +110,12 @@ describe ('ComponentBehavior', () => {
         <div class="field">
           <label class="label">Full Name</label>
           <input type="text" id="test-fullname" value="" placeholder="Please enter your full name" class="ninkasi_fullNameField input" required>
-          <p class="ninkasi_formFieldMessage help is-danger"></p>
+          <p id="fullname-error-message" class="ninkasi_formFieldMessage help is-danger"></p>
         </div>
         <div class="field">
           <label class="label">Generic Text</label>
           <input type="text" id="test-generic" value="" placeholder="Please enter something" class="input" required>
-          <p class="ninkasi_formFieldMessage help is-danger"></p>
+          <p id="generic-error-message" class="ninkasi_formFieldMessage help is-danger"></p>
         </div>
         <div class="field">
           <label class="label">Password</label>
@@ -123,7 +123,7 @@ describe ('ComponentBehavior', () => {
             <input type="password" id="text-field-password" value="password" placeholder="" class="input" data-shouldmatch="text-field-password-confirmation" required>
             <i id="eye-icon" class="fa fa-fw fa-eye field-icon ninkasi_show-password" aria-label="password-visibility-control" aria-hidden="true" aria-controls="text-field-password"></i>
           </div>
-          <p class="ninkasi_formFieldMessage help is-danger">Please enter a password</p>
+          <p id="password-error-message" class="ninkasi_formFieldMessage help is-danger">Please enter a password</p>
         </div>
         <div class="field">
           <label class="label">Password Confirmation</label>
@@ -131,12 +131,12 @@ describe ('ComponentBehavior', () => {
             <input type="password" id="text-field-password-confirmation" value="" placeholder="" class="ninkasi_passwordConfirmationField input" data-shouldmatch="text-field-password" required>
             <i id="eye-icon" class="fa fa-fw fa-eye field-icon ninkasi_show-password" aria-label="password-visibility-control" aria-hidden="true" aria-controls="text-field-password-confirmation"></i>
           </div>
-          <p class="ninkasi_formFieldMessage help is-danger">Please enter a password confirmation</p>
+          <p id="password-confirmation-error-message" class="ninkasi_formFieldMessage help is-danger">Please enter a password confirmation</p>
         </div>
         <div class="field">
           <label class="label">Username</label>
           <input type="text" id="test-username" value="" placeholder="Please enter your username" class="ninkasi_usernameField input" required>
-          <p id="username-error-mesage" class="ninkasi_formFieldMessage help is-danger"></p>
+          <p id="username-error-message" class="ninkasi_formFieldMessage help is-danger"></p>
         </div>
       `.trim();
     });
@@ -166,6 +166,273 @@ describe ('ComponentBehavior', () => {
         let matchedComponents = ComponentBehaviors.getMatchingValidatorsforElement(element);
         expect(matchedComponents.length).toBe(1);
         expect(_.values(matchedComponents)).toEqual(expect.arrayContaining([PasswordValidator]));
+      });
+    });
+
+    describe ('#setElementInvalid', () => {
+      describe ('when setting the validation for element with id #test-fullname', () => {
+        let elementId;
+        let message;
+        let messageId;
+
+        beforeEach(() => {
+          elementId = 'test-fullname';
+          messageId = 'fullname-error-message';
+          message = 'You cannot use this name because it contains invalid characters';
+        });
+
+        it ('should show the element as having the validation message specified and being marked as invalid', () => {
+          let componentBehaviors = ComponentBehaviors.getInstance(PREFIX, {
+            'fieldErrorClass': 'is-danger'
+          });
+
+          let element = document.getElementById(elementId);
+          expect(element).not.toBeNull();
+
+          ComponentBehaviors.setElementInvalid(element, message);
+
+          let messageElement = document.getElementById(messageId);
+
+          expect($(messageElement).text()).toBe(message);
+          expect($(messageElement).css('visibility')).toEqual('visible');
+          expect(_.values(element.classList)).toEqual(expect.arrayContaining(['is-danger']));
+        });
+
+        describe ('when later clearing the invalid status', () => {
+          it ('should show the element as having no validation message and being marked as valid', () => {
+            let componentBehaviors = ComponentBehaviors.getInstance(PREFIX, {
+              'fieldErrorClass': 'is-danger'
+            });
+
+            let element = document.getElementById(elementId);
+            expect(element).not.toBeNull();
+
+            ComponentBehaviors.setElementInvalid(element, message);
+
+            let messageElement = document.getElementById(messageId);
+
+            expect($(messageElement).text()).toBe(message);
+            expect($(messageElement).css('visibility')).toEqual('visible');
+            expect(_.values(element.classList)).toEqual(expect.arrayContaining(['is-danger']));
+
+            ComponentBehaviors.clearElementInvalid(element);
+
+            expect($(messageElement).css('visibility')).toEqual('hidden');
+            expect(_.values(element.classList)).not.toEqual(expect.arrayContaining(['is-danger']));
+          });
+        });
+      });
+
+      describe ('when setting the validation for element with id #test-generic', () => {
+        let elementId;
+        let message;
+        let messageId;
+
+        beforeEach(() => {
+          elementId = 'test-generic';
+          messageId = 'generic-error-message';
+          message = 'This value is not acceptable';
+        });
+
+        it ('should show the element as having the validation message specified and being marked as invalid', () => {
+          let componentBehaviors = ComponentBehaviors.getInstance(PREFIX, {
+            'fieldErrorClass': 'is-danger'
+          });
+
+          let element = document.getElementById(elementId);
+          expect(element).not.toBeNull();
+
+          ComponentBehaviors.setElementInvalid(element, message);
+
+          let messageElement = document.getElementById(messageId);
+
+          expect($(messageElement).text()).toBe(message);
+          expect($(messageElement).css('visibility')).toEqual('visible');
+          expect(_.values(element.classList)).toEqual(expect.arrayContaining(['is-danger']));
+        });
+
+        describe ('when later clearing the invalid status', () => {
+          it ('should show the element as having no validation message and being marked as valid', () => {
+            let componentBehaviors = ComponentBehaviors.getInstance(PREFIX, {
+              'fieldErrorClass': 'is-danger'
+            });
+
+            let element = document.getElementById(elementId);
+            expect(element).not.toBeNull();
+
+            ComponentBehaviors.setElementInvalid(element, message);
+
+            let messageElement = document.getElementById(messageId);
+
+            expect($(messageElement).text()).toBe(message);
+            expect($(messageElement).css('visibility')).toEqual('visible');
+            expect(_.values(element.classList)).toEqual(expect.arrayContaining(['is-danger']));
+
+            ComponentBehaviors.clearElementInvalid(element);
+
+            expect($(messageElement).css('visibility')).toEqual('hidden');
+            expect(_.values(element.classList)).not.toEqual(expect.arrayContaining(['is-danger']));
+          });
+        });
+      });
+
+      describe ('when setting the validation for element with id #text-field-password', () => {
+        let elementId;
+        let message;
+        let messageId;
+
+        beforeEach(() => {
+          elementId = 'text-field-password';
+          messageId = 'password-error-message';
+          message = 'Password is not complex enough';
+        });
+
+        it ('should show the element as having the validation message specified and being marked as invalid', () => {
+          let componentBehaviors = ComponentBehaviors.getInstance(PREFIX, {
+            'fieldErrorClass': 'is-danger'
+          });
+
+          let element = document.getElementById(elementId);
+          expect(element).not.toBeNull();
+
+          ComponentBehaviors.setElementInvalid(element, message);
+
+          let messageElement = document.getElementById(messageId);
+
+          expect($(messageElement).text()).toBe(message);
+          expect($(messageElement).css('visibility')).toEqual('visible');
+          expect(_.values(element.classList)).toEqual(expect.arrayContaining(['is-danger']));
+        });
+
+        describe ('when later clearing the invalid status', () => {
+          it ('should show the element as having no validation message and being marked as valid', () => {
+            let componentBehaviors = ComponentBehaviors.getInstance(PREFIX, {
+              'fieldErrorClass': 'is-danger'
+            });
+
+            let element = document.getElementById(elementId);
+            expect(element).not.toBeNull();
+
+            ComponentBehaviors.setElementInvalid(element, message);
+
+            let messageElement = document.getElementById(messageId);
+
+            expect($(messageElement).text()).toBe(message);
+            expect($(messageElement).css('visibility')).toEqual('visible');
+            expect(_.values(element.classList)).toEqual(expect.arrayContaining(['is-danger']));
+
+            ComponentBehaviors.clearElementInvalid(element);
+
+            expect($(messageElement).css('visibility')).toEqual('hidden');
+            expect(_.values(element.classList)).not.toEqual(expect.arrayContaining(['is-danger']));
+          });
+        });
+      });
+
+      describe ('when setting the validation for element with id #text-field-password-confirmation', () => {
+        let elementId;
+        let message;
+        let messageId;
+
+        beforeEach(() => {
+          elementId = 'text-field-password-confirmation';
+          messageId = 'password-confirmation-error-message';
+          message = 'Password confirmation is not complex enough';
+        });
+
+        it ('should show the element as having the validation message specified and being marked as invalid', () => {
+          let componentBehaviors = ComponentBehaviors.getInstance(PREFIX, {
+            'fieldErrorClass': 'is-danger'
+          });
+
+          let element = document.getElementById(elementId);
+          expect(element).not.toBeNull();
+
+          ComponentBehaviors.setElementInvalid(element, message);
+
+          let messageElement = document.getElementById(messageId);
+
+          expect($(messageElement).text()).toBe(message);
+          expect($(messageElement).css('visibility')).toEqual('visible');
+          expect(_.values(element.classList)).toEqual(expect.arrayContaining(['is-danger']));
+        });
+
+        describe ('when later clearing the invalid status', () => {
+          it ('should show the element as having no validation message and being marked as valid', () => {
+            let componentBehaviors = ComponentBehaviors.getInstance(PREFIX, {
+              'fieldErrorClass': 'is-danger'
+            });
+
+            let element = document.getElementById(elementId);
+            expect(element).not.toBeNull();
+
+            ComponentBehaviors.setElementInvalid(element, message);
+
+            let messageElement = document.getElementById(messageId);
+
+            expect($(messageElement).text()).toBe(message);
+            expect($(messageElement).css('visibility')).toEqual('visible');
+            expect(_.values(element.classList)).toEqual(expect.arrayContaining(['is-danger']));
+
+            ComponentBehaviors.clearElementInvalid(element);
+
+            expect($(messageElement).css('visibility')).toEqual('hidden');
+            expect(_.values(element.classList)).not.toEqual(expect.arrayContaining(['is-danger']));
+          });
+        });
+      });
+
+      describe ('when setting the validation for element with id #test-username', () => {
+        let elementId;
+        let message;
+        let messageId;
+
+        beforeEach(() => {
+          elementId = 'test-username';
+          messageId = 'username-error-message';
+          message = 'Username is already taken';
+        });
+
+        it ('should show the element as having the validation message specified and being marked as invalid', () => {
+          let componentBehaviors = ComponentBehaviors.getInstance(PREFIX, {
+            'fieldErrorClass': 'is-danger'
+          });
+
+          let element = document.getElementById(elementId);
+          expect(element).not.toBeNull();
+
+          ComponentBehaviors.setElementInvalid(element, message);
+
+          let messageElement = document.getElementById(messageId);
+
+          expect($(messageElement).text()).toBe(message);
+          expect($(messageElement).css('visibility')).toEqual('visible');
+          expect(_.values(element.classList)).toEqual(expect.arrayContaining(['is-danger']));
+        });
+
+        describe ('when later clearing the invalid status', () => {
+          it ('should show the element as having no validation message and being marked as valid', () => {
+            let componentBehaviors = ComponentBehaviors.getInstance(PREFIX, {
+              'fieldErrorClass': 'is-danger'
+            });
+
+            let element = document.getElementById(elementId);
+            expect(element).not.toBeNull();
+
+            ComponentBehaviors.setElementInvalid(element, message);
+
+            let messageElement = document.getElementById(messageId);
+
+            expect($(messageElement).text()).toBe(message);
+            expect($(messageElement).css('visibility')).toEqual('visible');
+            expect(_.values(element.classList)).toEqual(expect.arrayContaining(['is-danger']));
+
+            ComponentBehaviors.clearElementInvalid(element);
+
+            expect($(messageElement).css('visibility')).toEqual('hidden');
+            expect(_.values(element.classList)).not.toEqual(expect.arrayContaining(['is-danger']));
+          });
+        });
       });
     });
   });

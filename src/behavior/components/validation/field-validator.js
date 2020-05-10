@@ -198,4 +198,39 @@ export class FieldValidator extends Behavior {
   static doesElementMatchSelector(element) {
     throw FieldValidator.UNIMPLEMENTED_ERROR;
   }
+
+  /**
+   * Set an element as invalid manually.
+   *
+   * This sets a validation message on an element manually. This validity
+   * message is transient, meaning it will be cleared or overridden by standard
+   * validation behaviors at a later date. This is mainly used to indicate that
+   * some server-side validation returned an invalid value.
+   *
+   * @param {DOMElement | JQuery.Element} element The element to set as invalid.
+   * @param {String} message The message to set as a validation message.
+   *
+   * @throws `FieldValidator.UNIMPLEMENTED_ERROR` if called directly on the
+   *         `FieldValidator` class. This should only happen if you add a new
+   *         subclass of `FieldValidator` and neglect to implement this method.
+   */
+  static setElementInvalid(element, message) {
+      throw FieldValidator.UNIMPLEMENTED_ERROR;
+  }
+
+  /**
+   * Clear a previously set manual invalidation message.
+   *
+   * This clears messages set by `setElementInvalid`. This isn't completely
+   * necessary, as normal validation behavior will do this automatically.
+   *
+   * @param {DOMElement | JQuery.Element} element The element to set as invalid.
+   *
+   * @throws `FieldValidator.UNIMPLEMENTED_ERROR` if called directly on the
+   *         `FieldValidator` class. This should only happen if you add a new
+   *         subclass of `FieldValidator` and neglect to implement this method.
+   */
+  static clearElementInvalid(element) {
+    throw FieldValidator.UNIMPLEMENTED_ERROR;
+  }
 }
