@@ -5,12 +5,11 @@ import _ from 'lodash';
 import $ from 'jquery';
 
 const PREFIX = 'ninkasi';
-const UNIMPLEMENTED_ERROR = 'Unimplemented. You want to implement this in your subclass of FieldValidator';
 
 describe ('FieldValidator', () => {
   describe ('getSelector()', () => {
     it ('should throw an exception if called directly', () => {
-      expect(() => { FieldValidator.getSelector(); }).toThrow(UNIMPLEMENTED_ERROR);
+      expect(() => { FieldValidator.getSelector(); }).toThrow(FieldValidator.UNIMPLEMENTED_ERROR);
     });
   });
 
@@ -23,6 +22,12 @@ describe ('FieldValidator', () => {
       expect(classNames['ninkasi_fullNameField']).toBeDefined();
       expect(classNames['ninkasi_passwordConfirmationField']).toBeDefined();
       expect(classNames['ninkasi_usernameField']).toBeDefined();
+    });
+  });
+
+  describe('doesElementMatchSelector()', () => {
+    it ('should throw an exception if called directly', () => {
+      expect(() => { FieldValidator.doesElementMatchSelector(null); }).toThrow(FieldValidator.UNIMPLEMENTED_ERROR);
     });
   });
 });
