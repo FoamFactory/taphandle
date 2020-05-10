@@ -49,6 +49,26 @@ describe ('PasswordValidator', () => {
       it ('the selector for a Password object should be ["password", null]', () => {
         expect(PasswordValidator.getSelector()).toStrictEqual(["password", null]);
       });
+
+      describe ('the element with id text-field-password', () => {
+        it ('should match the selector for PasswordValidators', () => {
+          expect(PasswordValidator.doesElementMatchSelector($('#text-field-password'))).toBe(true);
+        });
+
+        it ('should not match the selector for PasswordConfirmationValidators', () => {
+          expect(PasswordConfirmationValidator.doesElementMatchSelector($('#text-field-password'))).toBe(false);
+        });
+      });
+
+      describe ('the element with id text-field-password-confirmation', () => {
+        it ('should not match the selector for PasswordValidators', () => {
+          expect(PasswordValidator.doesElementMatchSelector($('#text-field-password-confirmation'))).toBe(false);
+        });
+
+        it ('should match the selector for PasswordConfirmationValidators', () => {
+          expect(PasswordConfirmationValidator.doesElementMatchSelector($('#text-field-password-confirmation'))).toBe(true);
+        });
+      });
     });
   });
 

@@ -1,5 +1,6 @@
 import { ComponentBehaviors } from '../../../src';
 import { FullNameValidator } from '../../../src/behavior/components/validation/full-name-validator';
+import { UsernameValidator } from '../../../src/behavior/components/validation/username-validator';
 
 import _ from 'lodash';
 import $ from 'jquery';
@@ -36,6 +37,14 @@ describe ('FullNameValidator', () => {
       ComponentBehaviors.getInstance(PREFIX);
 
       expect($('#fullNameErrorMessage').css('visibility')).toBe('hidden');
+    });
+
+    it ('should show that #test-fullname matches the CSS selector for full name validators', () => {
+      expect(FullNameValidator.doesElementMatchSelector($('#test-fullname'))).toBe(true);
+    });
+
+    it ('should show that #test-fullname does not match the CSS selector for username validators', () => {
+      expect(UsernameValidator.doesElementMatchSelector($('#test-fullname'))).toBe(false);
     });
 
     describe ('when a full name validation field has the skip flag in its data attributes', () => {
