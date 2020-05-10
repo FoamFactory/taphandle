@@ -101,4 +101,32 @@ export class ComponentBehaviors {
       "defaultMatchFailedMessage": "The field and its confirmation do not match"
     };
   }
+
+  /**
+   * Retrieve the {FieldValidator}s for which a given element is matched.
+   *
+   * This method will give a set of javascript class objects for which a given
+   * element (either {DOMElement} or a {JQuery.Element}) matches the CSS
+   * selectors for.
+   *
+   * @param  {DOMElement|JQuery.Element} element  The element to check against
+   *         the set of active components
+   *
+   * @return {Array} A set of javascript classes defining the components that
+   *         are subclasses of {FieldValidator} and the given element matches
+   *         CSS selectors for.
+   */
+  static getMatchingValidatorsforElement(element) {
+    let matchingComponents = [];
+    for (let componentName in components) {
+      let componentClass = components[componentName];
+      if (componentClass.prototype instanceof FieldValidator) {
+        if (componentClass.doesElementMatchSelector(element)) {
+          matchingComponents.push(componentClass);
+        }
+      }
+    }
+
+    return matchingComponents;
+  }
 }
