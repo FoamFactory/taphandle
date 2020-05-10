@@ -61,7 +61,15 @@ export class ComponentBehaviors {
           ComponentBehaviors._processQueuedOperations();
         });
     } else {
-      window.setTimeout(ComponentBehaviors._setupComponentsOnDomReady, 100);
+      // XXX_jwir3: 5ms might seem a little excessive, but what we want is to
+      //            catch the DOM once it's loaded, but BEFORE it's been
+      //            rendered for the first time. Since the browser renders at 60
+      //            FPS (ideally), the first frame will be rendered within 16.67
+      //            ms of the DOM being ready. Hopefully, if we check soon
+      //            enough, this will set the appropriate CSS and re-layout the
+      //            page in time to coalesce with the first render. Or, browsers
+      //            don't work this way and I'm shooting in the dark here.
+      window.setTimeout(ComponentBehaviors._setupComponentsOnDomReady, 5);
     }
   }
 
